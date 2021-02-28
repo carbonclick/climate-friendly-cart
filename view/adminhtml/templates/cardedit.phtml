@@ -1,0 +1,316 @@
+<?php $carbonclickconfig = $block->getCarbonclickConfig(); ?>
+<?php $fetchcustomer = $block->getFetchcustomer(); ?>
+<div class="cfc-loading"></div>
+<form method="post" id="cfc_form" action="<?= $block->getUrl('cfc/card/updatecard') ?>" enctype="multipart/form-data">
+	<?php echo $block->getBlockHtml('formkey'); ?>
+	<div class="card-manager-tab-bg">
+    	<div class="carddetails">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                	<tr>
+	                    <th><?= __('Offset Credit Balance') ?></th>
+	                    <th><?= __('Card') ?></th>
+	                </tr>
+	                <tr>
+	                    <td><?= $fetchcustomer['topup'] ?></td>
+	                    <td><span class="last4">**** **** **** <?= $fetchcustomer['data']['last4'] ?></span></td>
+	                </tr>
+            	</tbody>
+            </table>
+            <a href="#" class="edit edit-card"><?= __('Update Card') ?></a>
+        </div>
+        <div class="update-card-details" style="display: none;">
+            <div class="card-element">
+                <!-- <div class="row">
+                    <div class="field">
+                        <input id="card-element-name" class="input empty" type="text" placeholder="Name" required="">
+                        <label for="card-element-name"><?php /* __('Name on card')  */?></label>
+                        <div class="baseline"></div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="field">
+                        <div id="card-element-card-number" class="input empty"></div>
+                        <label for="card-element-card-number"><?= __('Card number') ?></label>
+                        <div class="baseline"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field half-width">
+                        <div id="card-element-card-expiry" class="input empty"></div>
+                        <label for="card-element-card-expiry"><?= __('Expiry') ?></label>
+                        <div class="baseline"></div>
+                    </div>
+                    <div class="field half-width">
+                        <div id="card-element-card-cvc" class="input empty"></div>
+                        <label for="card-element-card-cvc"><?= __('CCV') ?></label>
+                        <div class="baseline"></div>
+                    </div>
+                </div>
+                <div id="card-errors" class="stripe-error" role="alert"></div>
+            </div>
+	        <div class="cfc-step-btn">
+	            <button name="updatecard" disabled="disabled" class="button-primary cfc-stripe-payment" type="submit" value="update"><?= __('Save') ?></button>
+	        </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+	require([
+	    'jquery',
+	    'mage/mage'
+	], function($){
+
+		// Set your publishable key: remember to change this to your live publishable key in production
+    	// See your keys here: https://dashboard.stripe.com/account/apikeys
+		var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
+		var form = document.getElementById('cfc_form');
+	    var elements = stripe.elements({
+	        fonts: [
+	          {
+	            cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+	          }
+	        ],
+	        // Stripe's examples are localized to specific languages, but if
+	        // you wish to have Elements automatically detect your user's locale,
+	        // use `locale: 'auto'` instead.
+	        locale: 'auto'
+	      });
+
+	    // Floating labels
+        var inputs = document.querySelectorAll('.card-element .input');
+        Array.prototype.forEach.call(inputs, function(input) {
+            input.addEventListener('focus', function() {
+                input.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                input.classList.remove('focused');
+            });
+            input.addEventListener('keyup', function() {
+                if (input.value.length === 0) {
+                    input.classList.add('empty');
+                } else {
+                    input.classList.remove('empty');
+                }
+            });
+        });
+
+	    var elementStyles = {
+            base: {
+                color: '#32325D',
+                fontWeight: 500,
+                fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
+                fontSize: '16px',
+                fontSmoothing: 'antialiased',
+
+                '::placeholder': {
+                    color: '#CFD7DF',
+                },
+                ':-webkit-autofill': {
+                    color: '#e39f48',
+                },
+            },
+            invalid: {
+                color: '#E25950',
+
+                '::placeholder': {
+                    color: '#FFCCA5',
+                },
+            },
+        };
+
+        var elementClasses = {
+            focus: 'focused',
+            empty: 'empty',
+            invalid: 'invalid',
+        };
+
+        var cardNumber = elements.create('cardNumber', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+
+        cardNumber.mount('#card-element-card-number');
+
+        var cardExpiry = elements.create('cardExpiry', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+        cardExpiry.mount('#card-element-card-expiry');
+
+        var cardCvc = elements.create('cardCvc', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+        cardCvc.mount('#card-element-card-cvc');
+
+
+        function registerElements(elements, exampleName, stripe, form) {
+            //var form = document.getElementById('cfc_form');
+            var error = form.querySelector('.stripe-error');
+            var errorMessage = form.querySelector('.stripe-error');
+
+            // Listen for errors from each Element, and show error messages in the UI.
+            var savedErrors = {};
+            var completedStatus = [];
+            elements.forEach(function(element, idx) {
+                element.on('change', function(event) {
+                    if (event.error) {
+                
+                        error.classList.add('visible');
+                        savedErrors[idx] = event.error.message;
+                        completedStatus[idx] = "error";
+                        errorMessage.innerText = event.error.message;
+
+                    } else if (event.complete) {
+
+                        completedStatus[idx] = "complete";
+
+                    }else {
+
+                        completedStatus[idx] = "neutral";
+                        savedErrors[idx] = null;
+                        // Loop over the saved errors and find the first one, if any.
+                        var nextError = Object.keys(savedErrors)
+                          .sort()
+                          .reduce(function(maybeFoundError, key) {
+                            return maybeFoundError || savedErrors[key];
+                          }, null);
+
+                        if (nextError) {
+                          // Now that they've fixed the current error, show another one.
+                          errorMessage.innerText = nextError;
+                        } else {
+                          // The user fixed the last error; no more errors.
+                          error.classList.remove('visible');
+                          errorMessage.innerText = "";
+                        }
+
+                    }
+
+
+                    if(completedStatus.length === 3 && !!completedStatus.reduce(function(a, b){ return (a === b) ? a : NaN; })){
+                        jQuery("button.cfc-stripe-payment").prop('disabled', false);
+                    }else{
+                        jQuery("button.cfc-stripe-payment").prop('disabled', true);
+                    }
+                });
+          });
+        }
+
+        function enableInputs() {
+            Array.prototype.forEach.call(
+                form.querySelectorAll(
+                    "input[type='text'], input[type='email'], input[type='tel']"
+                ),
+                function(input) {
+                    input.removeAttribute('disabled');
+                }
+            );
+        }
+
+        function disableInputs() {
+            Array.prototype.forEach.call(
+                form.querySelectorAll(
+                    "input[type='text'], input[type='email'], input[type='tel']"
+                ),
+                function(input) {
+                    input.setAttribute('disabled', 'true');
+                }
+            );
+        }
+
+        function triggerBrowserValidation() {
+            // The only way to trigger HTML5 form validation UI is to fake a user submit
+            // event.
+            var submit = document.createElement('input');
+            submit.type = 'submit';
+            submit.style.display = 'none';
+            form.appendChild(submit);
+            submit.click();
+            submit.remove();
+        }
+
+
+        registerElements([cardNumber, cardExpiry, cardCvc], 'card-element', stripe, form);
+
+	    // Create a token or display an error when the form is submitted.
+	    form.addEventListener('submit', function(event) {
+	      	event.preventDefault();
+
+            var plainInputsValid = true;
+            Array.prototype.forEach.call(form.querySelectorAll('input'), function(
+                input
+            ) {
+                if (input.checkValidity && !input.checkValidity()) {
+                    plainInputsValid = false;
+                    return;
+                }
+            });
+
+            if (!plainInputsValid) {
+                triggerBrowserValidation();
+                return;
+            }
+
+            disableInputs();
+
+            // Gather additional customer data we may have collected in our form.
+            /*var name = form.querySelector('#card-element-name');
+            var additionalData = {
+                name: name ? name.value : undefined,
+            };*/
+
+            jQuery('.stripe-error').html('');
+            jQuery('.cfc-loading').show();
+            var clientSecret = "";
+
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : "<?= $this->getUrl('cfc/onboard/clientsecrate') ?>",
+                data : {
+                        action: "get_stripe_intent_client_secret"
+                    },
+                success: function(response) {
+                  
+                    clientSecret = response.secret;
+                    
+                    stripe.confirmCardSetup(
+                    clientSecret,
+                    {
+                        payment_method: {
+                            card: cardNumber
+                        },
+                    }
+                    ).then(function(result) {
+
+                        jQuery('.cfc-loading').hide();
+                      
+                        if (result.error) {
+                            // Display error.message in your UI.
+                            jQuery('.stripe-error').html(result.error.message);
+                        } else {
+                            // The setup has succeeded. Display a success message.
+                            var form = document.getElementById('cfc_form');
+                            var hiddenInput = document.createElement('input');
+                            hiddenInput.setAttribute('type', 'hidden');
+                            hiddenInput.setAttribute('name', 'stripeToken');
+                            hiddenInput.setAttribute('value', result.setupIntent.id);
+                            form.appendChild(hiddenInput);
+                            form.submit();
+                        }
+                    });
+                }
+            });
+	    });
+
+	    $("a.edit-card").click(function(e) {
+	        e.preventDefault();
+	        $('.update-card-details').toggle();
+	    });
+	});
+    
+    
+</script>
+<?= $block->getLayout()->createBlock('Magento\Backend\Block\Template')->setTemplate('Carbonclick_CFC::hotjar.phtml')->toHtml(); ?>

@@ -1,0 +1,10 @@
+<div class="inner-bg">
+    <?php foreach ($this->getValues() as $name => $values): ?>
+        <fieldset>
+            <p class="description"><?= $values['header_text'] ?></p>
+            <input type="checkbox" class="checkbox input-checkbox required-entry" value="<?php echo $name?>" name="<?php echo $this->getNamePrefix() ?>[]" id="<?php echo $this->getHtmlId() . '_' . $name ?>"<?php echo ($this->getIsChecked($name) ? ' checked="checked"' : '') ?>/><label for="<?php echo $this->getHtmlId() . '_' . $name ?>">
+                <?= $values['label'] ?>
+            </label>
+        </fieldset>
+    <?php endforeach;?>
+</div>

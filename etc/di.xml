@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <type name="Magento\SalesRule\Model\RulesApplier">
+        <plugin name="remove_discount_on_order" type="Carbonclick\CFC\Plugin\SalesRule\Model\RulesApplier" sortOrder="1" disabled="false"/>
+    </type>
+    <type name="Magento\Rule\Model\Condition\AbstractCondition">
+        <plugin name="remove_product_data_from_quote" type="Carbonclick\CFC\Plugin\Rule\Model\AbstractCondition" sortOrder="1" disabled="false"/>
+    </type>
+    <preference for="Carbonclick\CFC\Api\PaymentfailedInterface" type="Carbonclick\CFC\Model\Paymentfailed" />
+    <type name="Magento\Config\Controller\Adminhtml\System\Config\Edit">
+        <plugin name="system_config_edit_show_message" type="Carbonclick\CFC\Plugin\System\Config\Edit" sortOrder="10"/>
+    </type>
+    <type name="Magento\Config\Model\Config\Backend\Currency\Base">
+        <plugin name="system_config_edit_currency_change" type="Carbonclick\CFC\Plugin\System\Config\Currency\Base" sortOrder="10"/>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="carbonclick_postpaid" xsi:type="object">Carbonclick\CFC\Console\Command\Postpaid</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

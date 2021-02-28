@@ -1,0 +1,338 @@
+<?php 
+$customerInfo = $block->getFetchcustomer(); 
+$impactdata = $block->getImpactall();
+$priceHelper = $block->getPriceHelper();
+$merchantImpact = $block->getMerchantImpact();
+$orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
+?>
+<?php echo $block->getBlockHtml('formkey'); ?>
+<div class="wrap">
+	<div class="cfc-dashboard-top-banner">
+		<p class="cfc-dashboard-banner"><?= __('Thank you for being one of') ?> <strong><?= number_format($impactdata['numberOfMerchants']['value'])?> <?= __('merchants') ?> </strong> <?= __('in our climate action movement!') ?></p>
+
+		<p class="cfc-dashboard-banner subtext"><?= __('Together we have enabled') ?> <strong><?= number_format($impactdata['numberOfContributions']['value'],0) ?></strong> <?= __('people to offset') ?> <strong><?= $block->ConvertToStoreWeight($impactdata['carbonOffsetImpact']['value'],$impactdata['carbonOffsetImpact']['unit']) ?></strong></p>
+	</div>
+	<div class="cfc-dashboard-metrics values">
+		<div class="alignmentCenter">
+			<div class="cfc-dashboard-metric-item">
+				<p class="cfc-dashboard-metric-text size-large"><?= number_format($orderpercentage,0) == 0 ? "N/A" : number_format($orderpercentage,0)."%" ?></p>
+				<p class="cfc-dashboard-metric-label"><?= __('Orders with offsets') ?></p>
+			</div>
+
+			<div class="cfc-dashboard-metric-item">
+				<p class="cfc-dashboard-metric-text size-large"><?= $customerInfo['offsets'] == 0 ? "N/A" : $priceHelper->currency($customerInfo['offsets'],true,false) ?></p>
+				<p class="cfc-dashboard-metric-label"><?= __('Offsets collected') ?></p>
+			</div>
+
+			<div class="cfc-dashboard-metric-item">
+				<p class="cfc-dashboard-metric-text size-large">
+					<?= $block->ConvertToStoreWeight($merchantImpact['carbonOffsetImpact']['value'],$merchantImpact['carbonOffsetImpact']['unit']) ?>
+					</p>
+				<p class="cfc-dashboard-metric-label"><?= __('CO2 offset') ?></p>
+			</div>
+
+			<div class="cfc-dashboard-metric-item">
+				<p class="cfc-dashboard-metric-text size-large"><?= $merchantImpact['numberOfContributions']['value'] == 0 ? "N/A" : number_format($merchantImpact['numberOfContributions']['value'],0) ?></p>
+				<p class="cfc-dashboard-metric-label"><?= __('Climate heroes') ?></p>
+			</div>
+		</div>
+	</div>
+	<div class="dashboard-card-sections">
+	    <div class="dashboard-card-left">
+		    <div class="dashboard-card-left-inner">
+		    	<?php if($block->getfullpathConfig('cfc/general/enable') != 1 || $block->getConfig("cart_setup_popup") != 1): ?>
+			    	<div class="dashboard-single-section cfc-not-yet-active">
+						<h2 class="card-title heading"><?= __('Complete your Climate Friendly Cart setup')?></h2>
+
+						<div class="card-content">
+							<p><?= __('Follow the steps below to activate Climate Friendly Cart for your store.')?></p>
+						</div>
+						
+						<div class="step1">
+							<h2 class="card-title heading"><?= __('Step 1')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('You can set where the widget is displayed in your store in the \'settings\' tab')?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>" class=""><?= __('Go to Settings')?></a>
+							</div>
+							</div>
+						</div>
+
+						<div class="step2">
+							<h2 class="card-title heading"><?= __('Step 2')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('You can adjust the style of the widget in the \'Look and Feel\' tab')?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>#cfc_lookandfeel-head"><?= __('Go to Look and Feel')?></a>
+							</div>
+		                    </div>
+						</div>	
+
+						<div class="step3">
+							<h2 class="card-title heading"><?= __('Step 3')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('Enable the widget in the \'settings\' tab')?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>"><?= __('Go to Settings')?></a>
+							</div>
+		                    </div>
+						</div>
+
+						<div class="step4">
+							<h2 class="card-title heading"><?= __('Step 4')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('Check that the widget looks good in your store')?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="<?= $block->getBaseUrl() ?>" target="_blank"><?= __('Go to Your Store')?></a>
+							</div>
+		                    </div>
+						</div>
+
+						<div class="step5">
+							<h2 class="card-title heading"><?= __('Step 5')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('Enable auto updates for Climate Friendly Cart so that you will get all our great new features as soon as they become available. Click \'Enable auto-updates\' next to Climate Friendly Cart.')?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="javascript:void(0);"><?= __('Go to Plugins')?></a>
+							</div>
+		                    </div>
+						</div>
+
+						<div class="step6">
+							<h2 class="card-title heading"><?= __('Step 6')?></h2>
+							<div class="card-content-cb-wrap">
+							<div class="card-content">
+								<?= __('If you have any questions, check out our')?> <a href="https://www.carbonclick.com/faq-woo-commerce/" target="_blank"><?= __("FAQ") ?></a> <?= __("or reach out to our friendly support team") ?>
+							</div>
+							<div class="card-content-bottom">
+								<a href="mailto:hello@carbonclick.com?subject=Climate%20Friendly%20Cart%20help%20needed%20for%20%5B<?= $block->getBaseUrl() ?>%5D" target="_blank"><?= __('Contact Us')?></a>
+							</div>
+		                    </div>
+						</div>
+
+						<a class="reward-btn save_cfc_shop_active" href="#"><?= __('Done')?></a>
+					</div>
+				<?php endif; ?>
+				<div class="dashboard-single-section">
+					<h2 class="card-title heading"><?= __('Your sustainability journey') ?></h2>
+					<div class="card-content">
+						<?= __('Power up your sustainability with CarbonClick. We’ve put together a checklist of things for you to do in order to get the most out of Climate Friendly Cart. Remember - sustainable businesses have more loyal customers, higher conversion rates and a lower impact on the planet.') ?>
+					</div>
+				</div>
+
+				<?php /*<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('ADD THE CART SNIPPET TO YOUR CHECKOUT') ?></h2>
+					<div class="card-content">
+						<?= __('Climate friendly cart’s installation process has 2 steps. Step 1: Install the app. Because you’re here, that means you’ve done that part! Nice! Step 2: Get the Climate friendly cart widget installed on your checkout; either by us or on your own.') ?>
+					</div>
+					<div class="card-content-bottom">
+			            <a href="https://carbonclick.com/business-shopify-install" target="_blank"><?= __('To see the installation instructions click here') ?></a>
+			            <div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_installation_instruction') == 1 ? 'checked="checked"':''; ?>  class="dashboard-card-checkbox" name="dashboard_installation_instruction">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div> */ ?>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('CHECK IF THE “GREEN BUTTON” IS ENABLED ON YOUR CHECKOUT') ?></h2>
+					<div class="card-content">
+						<?= __('If you asked us to install the widget for you, we’ll enable the cart on your behalf and you’ll get an email. Otherwise, head over to the settings page to enable it yourself.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="<?= $block->getUrl("adminhtml/system_config/edit/",array('section'=>'cfc')) ?>" target="_blank"><?= __('Open the settings page') ?></a>
+						<div class="toggle-button">
+						    <label class="switch">
+				              	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_settings_page') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_settings_page">
+				              	<span class="slider"></span>
+				            </label>
+						</div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('TAKE ACTION WITH OUR ONBOARDING KIT') ?></h2>
+					<div class="card-content">
+						<?= __('We’ve put together a guide to get you started with climate friendly cart, including social tiles, images, and messaging you can use to promote your sustainability') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://carbonclick.com/climate-warrior-onboarding-kit" target="_blank"><?= __('To get started click here') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_get_started') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_get_started">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('LEARN ABOUT THE FOOTPRINT OF YOUR STORE AND TAKE ACTION TO REDUCE IT') ?></h2>
+					<div class="card-content">
+						<?= __('The steps involved in reducing your emissions is to understand your emissions, measure and reduce. Reducing your emissions often results in cost savings, so addressing these makes huge sense.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://carbonclick.com/ecommerce_footprint_guide/" target="_blank"><?= __('Check out our guide') ?></a>
+						<div class="toggle-button">
+				            <label class="switch">
+				              	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_guide') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_guide">
+				              	<span class="slider"></span>
+				            </label>
+				        </div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('REDUCE AND OFFSET YOUR PERSONAL FOOTPRINT') ?></h2>
+					<div class="card-content">
+						<?= __('Show leadership by addressing your own footprint. With My CarbonClick you can get a monthly plan to offset your footprint - and learn how to reduce it.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://www.carbonclick.com/individuals" target="_blank"><?= __('Head over to My CarbonClick') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_head_over') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_head_over">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('PUBLISH A SUSTAINABILITY PAGE OR A SUSTAINABILITY STATEMENT') ?></h2>
+					<div class="card-content">
+						<?= __('By announcing you’re taking CarbonAction on your climate impact, you’ll start reaping the rewards. Remember, be genuine - not only does it make sense for the planet, but for your bottom line! This is also a great spot to add a statement saying you’re partnered with CarbonClick.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://carbonclick.com/climate-warrior-onboarding-kit/#sustainability_statement" target="_blank"><?= __('For a template to use, click here') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_template_to_use') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_template_to_use">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('ADD YOUR SUSTAINABILITY BADGE') ?></h2>
+					<div class="card-content">
+						<?= __('We’ve created a badge of honour for you to put on your website to show your commitment to sustainability.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://carbonclick.com/climate-warrior-onboarding-kit/#badge" target="_blank"><?= __('Check the badge here') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_badge_here') == 1 ? 'checked="checked"':'' ?>  class="dashboard-card-checkbox" name="dashboard_badge_here">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('GO SOCIAL') ?></h2>
+					<div class="card-content">
+						<?= __('Start spreading the word about going green with our recommended social posts.') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="https://carbonclick.com/climate-warrior-onboarding-kit/#social_posts" target="_blank"><?= __('See our social post ideas and images here') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_social_post_ideas') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_social_post_ideas">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+
+				<div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('PERSONALISE YOUR COLOURS') ?></h2>
+					<div class="card-content">
+						<?= __('Make our plugin your own by customising the colours. Remember, if you can, keep the green button as it’s part of our brand, easily recognisable and converts well') ?>
+					</div>
+					<div class="card-content-bottom">
+						<a href="<?= $block->getUrl("adminhtml/system_config/edit/",array('section'=>'cfc')) ?>" target="_blank"><?= __('Open the Look and feel page') ?></a>
+						<div class="toggle-button">
+			                <label class="switch">
+			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_look_and_feel') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_look_and_feel">
+			                  	<span class="slider"></span>
+			                </label>
+			            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dashboard-card-left dashboard-card-right">
+	     	<div class="dashboard-card-left-inner">
+			    <div class="dashboard-single-section">
+					<h2 class="card-title"><?= __('CLIMATE FRIENDLY REWARDS') ?></h2>
+					<div class="card-content">
+						<?= __('Give your internal sustainability initiatives a boost. Start offsetting business emissions? Or give it away to a charity. Climate Friendly Rewards has you covered.') ?>
+					</div>
+					<p class="small-text"><?= __('Available when rewards accumulate to US$50. Paid/redeemed quarterly.') ?></p>
+					<div class="card-content-bottom">
+						<a href="<?= $this->getUrl('cfc/reward/index') ?>"><?= __('Your rewards balance: $%1',$customerInfo['reward']? : 0) ?> </a>
+						<a class="reward-btn" href="<?= $this->getUrl('cfc/reward/index') ?>"><?= __('View Climate Friendly Rewards') ?></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	require([
+	    'jquery',
+	    'mage/mage'
+	], function($){
+		$(document).on('change', 'input', function() {
+			var value = 0
+			var name = this.name;
+			if(this.checked){
+				value = 1;
+			}
+			var formkey = $("input[name=form_key]").val();
+			var AjaxUrl = '<?php echo $block->getUrl('*/*/saveConfig') ?>';
+		  	$.ajax({
+		  		showLoader: true,
+                url: AjaxUrl,
+                data: {name,value,'form_key':formkey},
+                type: "POST"
+            }).done(function (data) {
+                return true;
+            });
+		});
+		$(document).on('click', 'a.save_cfc_shop_active', function(e) {
+
+	        e.preventDefault();
+	        var value = 1
+			var name = "cart_setup_popup";
+			var formkey = $("input[name=form_key]").val();
+			var AjaxUrl = '<?php echo $block->getUrl('*/*/saveConfig') ?>';
+		  	$.ajax({
+		  		showLoader: true,
+                url: AjaxUrl,
+                data: {name,value,'form_key':formkey},
+                type: "POST"
+            }).done(function (data) {
+            	$('.cfc-not-yet-active').hide(500);
+                return true;
+            });
+    	});
+	});
+</script>
+<?= $block->getLayout()->createBlock('Magento\Backend\Block\Template')->setTemplate('Carbonclick_CFC::hotjar.phtml')->toHtml(); ?>

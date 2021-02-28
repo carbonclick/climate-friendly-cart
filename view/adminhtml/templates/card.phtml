@@ -1,0 +1,337 @@
+<?php $carbonclickconfig = $block->getCarbonclickConfig(); ?>
+<div class="cfc-loading"></div>
+<form method="post" id="cfc_form" action="<?= $block->getUrl('cfc/onboard/createshop') ?>" enctype="multipart/form-data">
+	<?php echo $block->getBlockHtml('formkey'); ?>
+	<div class="cfc-onboading step2" id="step2">
+	     
+	     <div class="cfc-onboading-left">
+	        <div class="cfc-onboading-bg">
+	            <h2><?= __('Your payment details.') ?></h2>
+			    <p><?= __('Nice  work! Your customers are almost ready to start fighting climate change at the checkout.') ?></p>
+	            <div class="cfc-onboading-left-footer">
+	                <img src="<?= $this->getViewFileUrl('Carbonclick_CFC::images/onboard/logo.svg') ?>" />
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <div class="cfc-onboading-right">
+	        <div class="cfc-onboading-bg">
+                <div class="payment-charge-text">
+                    <div class="payment-charge-header">
+                        <span class="dashicons dashicons-info"></span> <?= __('What will you be charged?') ?>
+                    </div>
+                    <div class="payment-charge-body">
+                       <?php 
+                            if($carbonclickconfig['plugin']['sub_price'] == 0){     
+                        ?>                 
+                               <p><?= __('You will be charged $5 USD now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.') ?></p>
+                        <?php
+                            } else {                      
+                        ?>
+                               <p><?= __('After the 14 day free trial you will be charged the monthly subscription price for the app') ?></p>
+                               <p><?= __('You will also be charged $5 USD now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.') ?></p>
+                        <?php
+                            }
+                        ?>   
+                        <p><?= __('As your customers click the \'Green Button\' to purchase offsets, they reimburse you for offset charges.') ?></p>
+                    </div>
+                </div>
+
+	            <h3><?= __('Enter You Payment Details') ?></h3>
+	  
+	            <div class="card-element">
+	                <!-- <div class="row">
+	                    <div class="field">
+	                        <input id="card-element-name" class="input empty" type="text" placeholder="Name" required="">
+	                        <label for="card-element-name"><?php /* __('Name on card')  */ ?></label>
+	                        <div class="baseline"></div>
+	                    </div>
+	                </div> -->
+	                <div class="row">
+	                    <div class="field">
+	                        <div id="card-element-card-number" class="input empty"></div>
+	                        <label for="card-element-card-number"><?= __('Card number') ?></label>
+	                        <div class="baseline"></div>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="field half-width">
+	                        <div id="card-element-card-expiry" class="input empty"></div>
+	                        <label for="card-element-card-expiry"><?= __('Expiry') ?></label>
+	                        <div class="baseline"></div>
+	                    </div>
+	                    <div class="field half-width">
+	                        <div id="card-element-card-cvc" class="input empty"></div>
+	                        <label for="card-element-card-cvc"><?= __('CCV') ?></label>
+	                        <div class="baseline"></div>
+	                    </div>
+	                </div>
+	                <div id="card-errors" class="stripe-error" role="alert"></div>
+	            </div>
+	            <fieldset>
+                    <input type="checkbox" class="onboarding_agreement" id="agree_tc_rp_pp" value="1" required name="onboarding[agree_tc_rp_pp]"  data-validate="{required:true}"><label for="agree_tc_rp_pp"><?= __('I have read and accept the') ?> <a href="<?= $carbonclickconfig['links']['terms'] ?>" target="_blank"><?= __('Terms and Conditions') ?></a>, <a href="<?= $carbonclickconfig['links']['refund'] ?>" target="_blank"><?= __('Refund Policy') ?></a> <?= __('and') ?> <a href="<?= $carbonclickconfig['links']['privacy'] ?>" target="_blank"><?= __('Privacy Policy') ?></a></label>
+                </fieldset>
+	            <div class="cfc-step-btn">
+	                <button name="onboarding_next" class="button-primary cfc-stripe-payment" disabled="disabled" type="submit" value="Next"><?= __('Next') ?></button>
+	            </div>
+
+	        </div>
+	    </div>
+	    
+	</div>
+</form>
+<script type="text/javascript">
+	require([
+	    'jquery',
+	    'mage/mage'
+	], function($){
+
+		// Set your publishable key: remember to change this to your live publishable key in production
+    	// See your keys here: https://dashboard.stripe.com/account/apikeys
+		var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
+		var form = document.getElementById('cfc_form');
+	    var elements = stripe.elements({
+	        fonts: [
+	          {
+	            cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+	          }
+	        ],
+	        // Stripe's examples are localized to specific languages, but if
+	        // you wish to have Elements automatically detect your user's locale,
+	        // use `locale: 'auto'` instead.
+	        locale: 'auto'
+	      });
+
+	    // Floating labels
+        var inputs = document.querySelectorAll('.card-element .input');
+        Array.prototype.forEach.call(inputs, function(input) {
+            input.addEventListener('focus', function() {
+                input.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                input.classList.remove('focused');
+            });
+            input.addEventListener('keyup', function() {
+                if (input.value.length === 0) {
+                    input.classList.add('empty');
+                } else {
+                    input.classList.remove('empty');
+                }
+            });
+        });
+
+	    var elementStyles = {
+            base: {
+                color: '#32325D',
+                fontWeight: 500,
+                fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
+                fontSize: '16px',
+                fontSmoothing: 'antialiased',
+
+                '::placeholder': {
+                    color: '#CFD7DF',
+                },
+                ':-webkit-autofill': {
+                    color: '#e39f48',
+                },
+            },
+            invalid: {
+                color: '#E25950',
+
+                '::placeholder': {
+                    color: '#FFCCA5',
+                },
+            },
+        };
+
+        var elementClasses = {
+            focus: 'focused',
+            empty: 'empty',
+            invalid: 'invalid',
+        };
+
+        var cardNumber = elements.create('cardNumber', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+
+        cardNumber.mount('#card-element-card-number');
+
+        var cardExpiry = elements.create('cardExpiry', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+        cardExpiry.mount('#card-element-card-expiry');
+
+        var cardCvc = elements.create('cardCvc', {
+            style: elementStyles,
+            classes: elementClasses,
+        });
+        cardCvc.mount('#card-element-card-cvc');
+
+
+        function registerElements(elements, exampleName, stripe, form) {
+            //var form = document.getElementById('cfc_form');
+            var error = form.querySelector('.stripe-error');
+            var errorMessage = form.querySelector('.stripe-error');
+
+            // Listen for errors from each Element, and show error messages in the UI.
+            var savedErrors = {};
+            var completedStatus = [];
+            elements.forEach(function(element, idx) {
+                element.on('change', function(event) {
+                    if (event.error) {
+                
+                        error.classList.add('visible');
+                        savedErrors[idx] = event.error.message;
+                        completedStatus[idx] = "error";
+                        errorMessage.innerText = event.error.message;
+
+                    } else if (event.complete) {
+
+                        completedStatus[idx] = "complete";
+
+                    }else {
+
+                        completedStatus[idx] = "neutral";
+                        savedErrors[idx] = null;
+                        // Loop over the saved errors and find the first one, if any.
+                        var nextError = Object.keys(savedErrors)
+                          .sort()
+                          .reduce(function(maybeFoundError, key) {
+                            return maybeFoundError || savedErrors[key];
+                          }, null);
+
+                        if (nextError) {
+                          // Now that they've fixed the current error, show another one.
+                          errorMessage.innerText = nextError;
+                        } else {
+                          // The user fixed the last error; no more errors.
+                          error.classList.remove('visible');
+                          errorMessage.innerText = "";
+                        }
+
+                    }
+
+
+                    if(completedStatus.length === 3 && !!completedStatus.reduce(function(a, b){ return (a === b) ? a : NaN; })){
+                        jQuery("button.cfc-stripe-payment").prop('disabled', false);
+                    }else{
+                        jQuery("button.cfc-stripe-payment").prop('disabled', true);
+                    }
+                });
+          });
+        }
+
+        function enableInputs() {
+            Array.prototype.forEach.call(
+                form.querySelectorAll(
+                    "input[type='text'], input[type='email'], input[type='tel']"
+                ),
+                function(input) {
+                    input.removeAttribute('disabled');
+                }
+            );
+        }
+
+        function disableInputs() {
+            Array.prototype.forEach.call(
+                form.querySelectorAll(
+                    "input[type='text'], input[type='email'], input[type='tel']"
+                ),
+                function(input) {
+                    input.setAttribute('disabled', 'true');
+                }
+            );
+        }
+
+        function triggerBrowserValidation() {
+            // The only way to trigger HTML5 form validation UI is to fake a user submit
+            // event.
+            var submit = document.createElement('input');
+            submit.type = 'submit';
+            submit.style.display = 'none';
+            form.appendChild(submit);
+            submit.click();
+            submit.remove();
+        }
+
+
+        registerElements([cardNumber, cardExpiry, cardCvc], 'card-element', stripe, form);
+
+	    // Create a token or display an error when the form is submitted.
+	    form.addEventListener('submit', function(event) {
+	      	event.preventDefault();
+
+            var plainInputsValid = true;
+            Array.prototype.forEach.call(form.querySelectorAll('input'), function(
+                input
+            ) {
+                if (input.checkValidity && !input.checkValidity()) {
+                    plainInputsValid = false;
+                    return;
+                }
+            });
+
+            if (!plainInputsValid) {
+                triggerBrowserValidation();
+                return;
+            }
+
+            disableInputs();
+
+            // Gather additional customer data we may have collected in our form.
+            /*var name = form.querySelector('#card-element-name');
+            var additionalData = {
+                name: name ? name.value : undefined,
+            };*/
+
+            jQuery('.stripe-error').html('');
+            jQuery('.cfc-loading').show();
+            var clientSecret = "";
+
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : "<?= $this->getUrl('cfc/onboard/clientsecrate') ?>",
+                data : {
+                        action: "get_stripe_intent_client_secret"
+                    },
+                success: function(response) {
+                  
+                    clientSecret = response.secret;
+                    
+                    stripe.confirmCardSetup(
+                    clientSecret,
+                    {
+                        payment_method: {
+                            card: cardNumber
+                        },
+                    }
+                    ).then(function(result) {
+
+                        jQuery('.cfc-loading').hide();
+                      
+                        if (result.error) {
+                            // Display error.message in your UI.
+                            jQuery('.stripe-error').html(result.error.message);
+                        } else {
+                            // The setup has succeeded. Display a success message.
+                            var form = document.getElementById('cfc_form');
+                            var hiddenInput = document.createElement('input');
+                            hiddenInput.setAttribute('type', 'hidden');
+                            hiddenInput.setAttribute('name', 'stripeToken');
+                            hiddenInput.setAttribute('value', result.setupIntent.id);
+                            form.appendChild(hiddenInput);
+                            form.submit();
+                        }
+                    });
+                }
+            });
+	    });
+	 
+	});
+    
+    
+</script>
+<?= $block->getLayout()->createBlock('Magento\Backend\Block\Template')->setTemplate('Carbonclick_CFC::hotjar.phtml')->toHtml(); ?>

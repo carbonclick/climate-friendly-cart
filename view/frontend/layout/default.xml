@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   <head>        
+        <css src="Carbonclick_CFC::css/custom-plugin-css.css"/>
+    </head>
+
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" ifconfig="cfc/general/enable" name="carbonclick_css" template="Carbonclick_CFC::css.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="minicart">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="minicart_content" xsi:type="array">
+                            <item name="component" xsi:type="string">Magento_Checkout/js/view/minicart</item>
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">Carbonclick_CFC/minicart/content</item>
+                            </item>
+                            <item name="children" xsi:type="array">
+                                <item name="carbonclick" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="displayArea" xsi:type="string">carbonclick</item>
+                                    </item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="extra" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="template" xsi:type="string">Carbonclick_CFC/minicart/carbonclick</item>
+                                                <item name="componentDisabled" xsi:type="helper" helper="Carbonclick\CFC\Helper\Email::getMiniCartpageDisable"></item>
+                                            </item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="subtotal.totals" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Carbonclick_CFC/js/view/checkout/minicart/carbonclick/cartdata</item>
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Carbonclick_CFC/minicart/carbonclick/cartdata</item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
