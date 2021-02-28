@@ -18,7 +18,7 @@ class UpdateShop extends CreateShop
     	$shop = $this->getShop();
         $params['orders_count'] = $this->getOrderCount();
         // DO NOT CHANGE THE VALUE OF THIS PARAMATER. Our make script performs a search/replace on this to insert the build pipeline number.
-        $params['version'] = "1.0.10001";
+        $params['version'] = "1.0.10002";
 
     	try{
             $this->curl->setOption(CURLOPT_TIMEOUT, 60);
