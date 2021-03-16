@@ -1,5 +1,6 @@
 <?php $carbonclickconfig = $block->getCarbonclickConfig(); ?>
 <?php $fetchcustomer = $block->getFetchcustomer(); ?>
+<?php $priceHelper = $block->getPriceHelper(); ?>
 <div class="cfc-loading"></div>
 <form method="post" id="cfc_form" action="<?= $block->getUrl('cfc/card/updatecard') ?>" enctype="multipart/form-data">
 	<?php echo $block->getBlockHtml('formkey'); ?>
@@ -12,7 +13,7 @@
 	                    <th><?= __('Card') ?></th>
 	                </tr>
 	                <tr>
-	                    <td><?= $fetchcustomer['topup'] ?></td>
+	                    <td><?= $priceHelper->currency($fetchcustomer['topup'],true,false) ?></td>
 	                    <td><span class="last4">**** **** **** <?= $fetchcustomer['data']['last4'] ?></span></td>
 	                </tr>
             	</tbody>

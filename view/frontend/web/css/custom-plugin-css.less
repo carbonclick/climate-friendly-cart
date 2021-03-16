@@ -121,6 +121,11 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        &:hover {
+            span.cfc-offset-plus {
+                color: #2AA43C !important;
+            } 
+        }
     }
     .cfc-carbo-offset-button button:before {
         content: "" !important;
@@ -292,7 +297,7 @@
     }
     span.cfc-offset-plus {
         position: absolute;
-        right: 10px;
+        left: 10px;
         font-size: 23px;
         line-height: 25px;
         top: 9px;
@@ -358,6 +363,15 @@
             }
         }
     }
+    .storefront {
+        .cfc-cart-wrapper-main {
+            .cfc-content {
+                .cfc-content-title {
+                    max-width: 230px;
+                }
+            }
+        }
+    }
 }
 
 .middle-header-content {
@@ -412,6 +426,65 @@
         width: 100%;
     }
 }
+
+#cfc-offset-widget.storefront {
+    width: 75%;
+    @media only screen and (max-width: 767px) {
+        width: 100%;
+    }
+}
+
+#cfc-offset-mini-cart-widget {
+    .cfc-cart-wrapper-main {
+        padding: 0;
+        border: none;
+        background: none;
+        margin-top: 10px; 
+        .cfc-content-title {
+            text-align: left;
+            width: auto; 
+            padding: 0 10px 0 0;
+        }
+        .cfc-carbo-offset-button {
+            width: auto;
+            margin-left: auto;
+            &:hover {
+                span.cfc-offset-plus {
+                    color: #2AA43C;
+                } 
+            }
+            button {
+                padding: 8px 8px;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flex;
+                display: -o-flex;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    }
+    .cfc-content {
+        -webkit-flex-wrap: nowrap;
+        -moz-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        -o-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    }
+    span.cfc-offset-plus {
+        position: static;
+        line-height: 10px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 3px;
+    }
+    span.cc-add-button-tick {
+        padding-left: 5px;
+    }
+}
+
 
 @media only screen and (max-width: 991px) {
     .cfc-cart-wrapper-main {

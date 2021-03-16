@@ -52,10 +52,10 @@ $orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
 							<h2 class="card-title heading"><?= __('Step 1')?></h2>
 							<div class="card-content-cb-wrap">
 							<div class="card-content">
-								<?= __('You can set where the widget is displayed in your store in the \'settings\' tab')?>
+								<?= __('You can set where the widget is displayed in your store in the \'configuration\' tab')?>
 							</div>
 							<div class="card-content-bottom">
-								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>" class=""><?= __('Go to Settings')?></a>
+								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>" class=""><?= __('Go to Configuration')?></a>
 							</div>
 							</div>
 						</div>
@@ -76,10 +76,10 @@ $orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
 							<h2 class="card-title heading"><?= __('Step 3')?></h2>
 							<div class="card-content-cb-wrap">
 							<div class="card-content">
-								<?= __('Enable the widget in the \'settings\' tab')?>
+								<?= __('Enable the widget in the \'configuration\' panel')?>
 							</div>
 							<div class="card-content-bottom">
-								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>"><?= __('Go to Settings')?></a>
+								<a href="<?= $this->getUrl("adminhtml/system_config/edit/section/cfc") ?>"><?= __('Go to Configuration')?></a>
 							</div>
 		                    </div>
 						</div>
@@ -100,19 +100,7 @@ $orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
 							<h2 class="card-title heading"><?= __('Step 5')?></h2>
 							<div class="card-content-cb-wrap">
 							<div class="card-content">
-								<?= __('Enable auto updates for Climate Friendly Cart so that you will get all our great new features as soon as they become available. Click \'Enable auto-updates\' next to Climate Friendly Cart.')?>
-							</div>
-							<div class="card-content-bottom">
-								<a href="javascript:void(0);"><?= __('Go to Plugins')?></a>
-							</div>
-		                    </div>
-						</div>
-
-						<div class="step6">
-							<h2 class="card-title heading"><?= __('Step 6')?></h2>
-							<div class="card-content-cb-wrap">
-							<div class="card-content">
-								<?= __('If you have any questions, check out our')?> <a href="https://www.carbonclick.com/faq-woo-commerce/" target="_blank"><?= __("FAQ") ?></a> <?= __("or reach out to our friendly support team") ?>
+								<?= __('If you have any questions, check out our')?> <a href="https://www.carbonclick.com/climate_friendly_cart_for_magento/" target="_blank"><?= __("FAQ") ?></a> <?= __("or reach out to our friendly support team") ?>
 							</div>
 							<div class="card-content-bottom">
 								<a href="mailto:hello@carbonclick.com?subject=Climate%20Friendly%20Cart%20help%20needed%20for%20%5B<?= $block->getBaseUrl() ?>%5D" target="_blank"><?= __('Contact Us')?></a>
@@ -149,10 +137,10 @@ $orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
 				<div class="dashboard-single-section">
 					<h2 class="card-title"><?= __('CHECK IF THE “GREEN BUTTON” IS ENABLED ON YOUR CHECKOUT') ?></h2>
 					<div class="card-content">
-						<?= __('If you asked us to install the widget for you, we’ll enable the cart on your behalf and you’ll get an email. Otherwise, head over to the settings page to enable it yourself.') ?>
+						<?= __('Head over to the configuration panel to make sure Climate Friendly Cart is enabled for your customers.') ?>
 					</div>
 					<div class="card-content-bottom">
-						<a href="<?= $block->getUrl("adminhtml/system_config/edit/",array('section'=>'cfc')) ?>" target="_blank"><?= __('Open the settings page') ?></a>
+						<a href="<?= $block->getUrl("adminhtml/system_config/edit/",array('section'=>'cfc')) ?>" target="_blank"><?= __('Open the configuration page') ?></a>
 						<div class="toggle-button">
 						    <label class="switch">
 				              	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_settings_page') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_settings_page">
@@ -253,22 +241,6 @@ $orderpercentage = $block->getOrderwithOffset($customerInfo['orders']);
 						<div class="toggle-button">
 			                <label class="switch">
 			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_social_post_ideas') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_social_post_ideas">
-			                  	<span class="slider"></span>
-			                </label>
-			            </div>
-					</div>
-				</div>
-
-				<div class="dashboard-single-section">
-					<h2 class="card-title"><?= __('PERSONALISE YOUR COLOURS') ?></h2>
-					<div class="card-content">
-						<?= __('Make our plugin your own by customising the colours. Remember, if you can, keep the green button as it’s part of our brand, easily recognisable and converts well') ?>
-					</div>
-					<div class="card-content-bottom">
-						<a href="<?= $block->getUrl("adminhtml/system_config/edit/",array('section'=>'cfc')) ?>" target="_blank"><?= __('Open the Look and feel page') ?></a>
-						<div class="toggle-button">
-			                <label class="switch">
-			                  	<input type="checkbox" value="1" <?= $block->getConfig('dashboard_look_and_feel') == 1 ? 'checked="checked"':'' ?> class="dashboard-card-checkbox" name="dashboard_look_and_feel">
 			                  	<span class="slider"></span>
 			                </label>
 			            </div>

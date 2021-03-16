@@ -17,13 +17,18 @@ class AdditionalConfigVars extends Carbonclick implements ConfigProviderInterfac
         $iconcolor = $helper->getConfig('cfc/lookandfeel/plugincolors/icons_color');
         $cfclogo = $helper->getConfig('cfc/lookandfeel/cfclogo/color_option');
         $filename = "carbonclick-logo-".$cfclogo."-picker.svg";
+        $showdecimal = true; 
+        if($product->getPrice() == intval($product->getPrice())){
+            $showdecimal = false;
+        }
+        $price = $priceHelper->currency($product->getPrice(),true,false);
 
         $additionalVariables['carbonclick_data'] = [
             'icon_colour' => $iconcolor,
             'carbonclick_logo' => $this->getViewFileUrl('Carbonclick_CFC::images/'.$filename),
             'carbonweight' => $co2weight,
             'addtocarturl' => $this->getAddtocartUrl($product),
-            'product_price' => $priceHelper->currency($product->getPrice(),true,false),
+            'product_price' => $showdecimal ? $price : substr($price, 0, strpos($price, ".")),
             'impactalldata' => $impactalldata,
             'product_in_cart' => $cartitem ? true : false,
             'remove_url' => $cartitem ? $this->getRemoveCartUrl($cartitem) : false,

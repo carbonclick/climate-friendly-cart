@@ -50,10 +50,13 @@ if($helper->getCartpageDisable() === false){
 	        		<div class="cfc-carbo-offset-button">
 			        	<form action="<?= $block->getAddtocartUrl($product); ?>" method="post"> 
 						    <?php echo $block->getBlockHtml('formkey')?>
+						    <?php $showdecimal = true; if($product->getPrice() == intval($product->getPrice())): ?>
+						    	<?php $showdecimal = false; ?>
+							<?php endif; ?>
 						    <?php $price =  $priceHelper->currency($product->getPrice(),true,false)?>
 						    <div class="btn">
 						        <button type="submit" title="<?= $price ?>" class="primary">
-						            <span><?= $price ?></span><span class="cfc-offset-plus">+</span>
+						            <span><?= $showdecimal ? $price : substr($price, 0, strpos($price, ".")); ?></span><span class="cfc-offset-plus">+</span>
 						        </button>
 						    </div>   
 						</form>

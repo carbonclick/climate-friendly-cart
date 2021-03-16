@@ -6,7 +6,7 @@ namespace Carbonclick\CFC\Model\Service;
 abstract class AbstractService
 {
     // DO NOT CHANGE THE THE VALUE OF THIS VARIABLE . Our make script performs a search/replace on this to insert the correct url for each environment.
-    const CARBONCLICK_CONFIG_URL = 'https://extmagewoo.qual.carbon.click/';
+    const CARBONCLICK_CONFIG_URL = 'https://extmagewoo.carbon.click/';
 
     protected $scopeConfig;
 
