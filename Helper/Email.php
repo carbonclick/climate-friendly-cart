@@ -6,6 +6,7 @@ use Magento\Framework\Translate\Inline\StateInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\App\ProductMetadataInterface;
 
 class Email extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -14,12 +15,14 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     protected $transportBuilder;
     protected $logger;
     protected $request;
+    protected $productMetadata;
 
     public function __construct(
         Context $context,
         StateInterface $inlineTranslation,
         Escaper $escaper,
         Http $request,
+        ProductMetadataInterface $ProductMetadata,
         TransportBuilder $transportBuilder
     ) {
         parent::__construct($context);
@@ -27,6 +30,7 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         $this->escaper = $escaper;
         $this->request = $request;
         $this->transportBuilder = $transportBuilder;
+        $this->productMetadata = $ProductMetadata;
         $this->logger = $context->getLogger();
     }
 
@@ -116,5 +120,26 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     public function getAvailableLocation(){
         $location = $this->getConfig('cfc/general/widget_location');
         return explode(",", $location);
+    }
+
+    public function getTemplateConfig()
+    {
+        if($this->getConfig('cfc/general/enable') == 1){
+            if(version_compare($this->getMagentoVersion(), "2.3.4", "<=")){
+                return 'Carbonclick_CFC/minicart/content234';    
+            }elseif(version_compare($this->getMagentoVersion(), "2.3.6", "<=")){
+                return 'Carbonclick_CFC/minicart/content236';    
+            }elseif(version_compare($this->getMagentoVersion(), "2.4.1", "<=")){
+                return 'Carbonclick_CFC/minicart/content';
+            }
+        }
+
+        return 'Magento_Checkout/minicart/content';
+        
+    }
+
+    public function getMagentoVersion()
+    {
+        return $this->productMetadata->getVersion();
     }
 }
