@@ -5,17 +5,13 @@
  */
 namespace Carbonclick\CFC\Model\Config\Backend;
 
-class Enable extends \Magento\Framework\App\Config\Value
+class Topup extends \Magento\Framework\App\Config\Value
 {
 
     /**
      * @var \Carbonclick\CFC\Model\CreateProduct
      */
-    protected $cfcproduct;
-
-    protected $updateshop;
-
-    private $currency = ['EUR', 'NZD', 'CAD', 'USD', 'GBP', 'AUD','ZAR'];
+    protected $_config;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -29,7 +25,7 @@ class Enable extends \Magento\Framework\App\Config\Value
         array $data = []
     ) {
        
-       $this->cfcproduct = $cfcproduct; 
+       $this->cfcproduct = $cfcproduct;
        $this->updateshop = $updateshop; 
         parent::__construct(
             $context, 
@@ -48,36 +44,10 @@ class Enable extends \Magento\Framework\App\Config\Value
     public function afterSave()
     { 
         if ($this->isValueChanged()) {
-             $this->cfcproduct->UpdateStatus($this->getValue());
-             $value = $this->getValue() == 1? true: false;
-             $this->updateshop->UpdateShop(['setup'=>$value]);
+             $this->cfcproduct->UpdatePrice($this->getValue());
+             $this->updateshop->UpdateShop(['preferred_topup'=>$this->getValue()]);
         }
         return parent::afterSave();
-    }
-
-    /**
-     * Processing object before save data
-     *
-     * @return $this
-     */
-    public function beforeSave()
-    {
-        if($this->getValue() == 1 && !in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __('We are only supported EUR, USD, AUD, CAD, NZD, GBP and ZAR currencies.')
-            );    
-        }
-
-        if($this->getValue() == 1){
-            $response = $this->updateshop->UpdateShop(['setup'=>true]);
-            if($response['success'] == false && $response['error'] == "blocked"){
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __($response['message'])
-                );
-            }
-        }
-
-        return parent::beforeSave();
     }
 
 }

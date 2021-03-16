@@ -8,6 +8,9 @@ class AdditionalConfigVars extends Carbonclick implements ConfigProviderInterfac
 {
     public function getConfig()
 	{
+        if(is_null($this->getProductId())){
+            return [];
+        }
         $helper = $this->getHelper();
         $impactalldata = $this->getImpactData();
         $product = $this->getProduct();

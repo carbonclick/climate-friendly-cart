@@ -1,3 +1,3 @@
 # cfc-magento
 
-Climate Friendly Cart for Magento Extension
+Climate Friendly Cart for Magento

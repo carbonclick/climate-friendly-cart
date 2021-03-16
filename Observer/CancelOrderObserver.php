@@ -28,6 +28,9 @@ class CancelOrderObserver implements ObserverInterface
 	public function execute(\Magento\Framework\Event\Observer $observer)
 	{
 	    $order = $observer->getEvent()->getOrder();
+	    if(empty($this->helper->getConfig('cfc/general/shop'))){
+        	return $this;
+        }
 	    $productId = $this->helper->getConfig('cfc/general/product');
 	    foreach ($order->getAllVisibleItems() as $item) {
 	    	if($item->getProductId() == $productId){
