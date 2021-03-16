@@ -52,6 +52,11 @@ class OrderObserver implements ObserverInterface
             //order not saved in the database
             return $this;
         }
+
+        if(empty($this->updateshop->getShop())){
+        	return $this;
+        }
+        
 	    if(!is_null($order->getCarbonclickSyncFailed())  && ($order->getCarbonclickSyncFailed() == 0 || $order->getCarbonclickSyncFailed() == 1)){
 	    	return $this;
 	    }

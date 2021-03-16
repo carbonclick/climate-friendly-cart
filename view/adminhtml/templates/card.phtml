@@ -22,7 +22,7 @@
                     </div>
                     <div class="payment-charge-body">
                        <?php 
-                            if($carbonclickconfig['plugin']['sub_price'] == 0){     
+                            if(isset($carbonclickconfig['plugin']['sub_price']) && $carbonclickconfig['plugin']['sub_price'] == 0){     
                         ?>                 
                                <p><?= __('You will be charged $5 USD now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.') ?></p>
                         <?php
