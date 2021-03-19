@@ -64,7 +64,7 @@ class Enable extends \Magento\Framework\App\Config\Value
     {
         if($this->getValue() == 1 && !in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('We are only supported EUR, USD, AUD, CAD, NZD, and GBP currencies.')
+                __('We are only supported EUR, USD, AUD, CAD, NZD, GBP and ZAR currencies.')
             );    
         }
 

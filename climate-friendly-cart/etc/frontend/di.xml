@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <type name="Magento\Checkout\CustomerData\Cart">
+        <plugin name="extra_data" type="Carbonclick\CFC\Plugin\Checkout\CustomerData\Cart"/>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+       	<arguments>
+           	<argument name="configProviders" xsi:type="array">
+               	<item name="additional_provider" xsi:type="object">Carbonclick\CFC\Block\Cart\AdditionalConfigVars</item>
+           	</argument>
+       	</arguments>
+  	</type>
+</config>

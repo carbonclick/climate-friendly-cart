@@ -1,0 +1,88 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php 
+$helper = $this->helper('Carbonclick\CFC\Helper\Email');
+
+$pluginbordercolor =  $helper->getConfig('cfc/lookandfeel/plugincolors/border_color');
+$plugin_background_color = $helper->getConfig('cfc/lookandfeel/plugincolors/background_color');
+$plugin_background_color_expanded = $helper->getConfig('cfc/lookandfeel/plugincolors/background_color_expanded');
+$plugin_icons_color = $helper->getConfig('cfc/lookandfeel/plugincolors/icons_color');
+$plugin_text_colour_top_section =  $helper->getConfig('cfc/lookandfeel/plugincolors/text_color_top_section');
+$plugin_large_text_colour_expanded = $helper->getConfig('cfc/lookandfeel/plugincolors/large_text_color_expanded');
+$plugin_small_text_colour_expanded = $helper->getConfig('cfc/lookandfeel/plugincolors/small_text_color_expanded');
+
+$button_border_colour = $helper->getConfig('cfc/lookandfeel/buttoncolors/border_color');
+$button_background_colour =  $helper->getConfig('cfc/lookandfeel/buttoncolors/background_color');
+$button_text_colour = $helper->getConfig('cfc/lookandfeel/buttoncolors/text_color');
+$button_plus_icon_colour = $helper->getConfig('cfc/lookandfeel/buttoncolors/plus_icon_color');
+$button_background_colour_selected =  $helper->getConfig('cfc/lookandfeel/buttoncolors/background_color_selected');
+$button_text_colour_selected =  $helper->getConfig('cfc/lookandfeel/buttoncolors/text_color_selected');
+$button_checkmark_icon_selected =  $helper->getConfig('cfc/lookandfeel/buttoncolors/checkmark_icon_selected');
+
+?>
+
+<style type="text/css">
+	.cfc-cart-wrapper-main {
+        border-color: <?= $pluginbordercolor ?> !important;
+        background-color  : <?= $plugin_background_color ?> !important;
+    }
+
+        .cfc-dropdown-body {
+            background-color  : <?= $plugin_background_color_expanded ?> !important;
+       }
+
+        .cfc-content .cfc-content-title, #cfc-learn-more {
+            color: <?= $plugin_text_colour_top_section ?> !important;
+       }
+
+        #cfc-dropdown h5 {
+            color: <?= $plugin_large_text_colour_expanded ?> !important;
+       }
+
+        .help-fund-text, .cfc-tagline, .cfc-stat-number, .cfc-stat-name {
+            color: <?= $plugin_small_text_colour_expanded ?> !important;
+       }
+
+        .cfc-carbo-offset-button button {
+            border-color: <?= $button_border_colour ?> !important;
+            background: <?= $button_background_colour ?> !important;
+            color: <?= $button_text_colour ?> !important;
+       }
+
+        span.cfc-offset-plus {
+            color: <?= $button_plus_icon_colour ?> !important;
+       }
+
+        .cfc-thankyou-button button {
+            background: <?= $button_background_colour_selected ?> !important;
+            color: <?= $button_text_colour_selected ?> !important;
+       } 
+
+        .cc-add-button-tick svg path {
+            fill: <?= $button_checkmark_icon_selected ?> !important;
+       }
+        
+        .cfc-angle-down {
+            border-color: <?= $plugin_icons_color ?> !important;
+        }
+        .help-fund-wrapper .help-fund svg path,
+        .cfc-stat svg path {
+           stroke: <?= $plugin_icons_color ?>;
+        }
+        .help-fund-wrapper .windmill_svg .st0 {
+           stroke: <?= $plugin_icons_color ?> !important;
+           fill: <?= $plugin_icons_color ?> !important;
+           stroke-width: 1 !important;
+        }
+
+        .cfc-stat-icon-2 svg path,
+        .cfc-stat-icon-3 svg path:first-child,
+        .cfc-tagline svg path:first-child, .cc-hidden-mobile svg path {
+           fill: <?= $plugin_icons_color ?> !important;
+       }
+</style>
+

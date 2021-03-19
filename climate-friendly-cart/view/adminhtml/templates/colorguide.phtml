@@ -1,0 +1,10 @@
+<div class="look-feel-bg">
+	<div class="color-guide">
+	    <h2><?= __("Colour Guide") ?></h2>
+	    <p><?= __("Match the numbers in the guide with the colour pickers below, to easily edit the CarbonClick plugin's colours to match your store.") ?></p>
+	</div>
+	<div class="color-guide-image">
+	    <img src="<?php echo $this->getViewFileUrl('Carbonclick_CFC::images/color-guide-large.svg') ?>" width="">        
+	</div>
+</div>
+<?= $block->getLayout()->createBlock('Magento\Backend\Block\Template')->setTemplate('Carbonclick_CFC::hotjar.phtml')->toHtml(); ?>

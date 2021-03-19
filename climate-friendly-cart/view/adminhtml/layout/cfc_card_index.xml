@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+        <script src="https://js.stripe.com/v3/" src_type="url"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Carbonclick\CFC\Block\Adminhtml\Cardedit" cacheable="false" name="cfccardedit" template="Carbonclick_CFC::cardedit.phtml">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

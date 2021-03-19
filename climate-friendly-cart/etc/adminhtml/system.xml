@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="carbonclick" translate="label" sortOrder="101">
+            <label>Climate Friendly</label>
+        </tab>
+        <section id="cfc" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>Climate Friendly Configuration</label>
+            <tab>carbonclick</tab>
+            <resource>Carbonclick_CFC::cfc</resource>
+            <group id="general" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <backend_model>Carbonclick\CFC\Model\Config\Backend\Enable</backend_model>
+                </field>
+
+                <field id="widget_location" translate="label" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="0">
+                   <label>Widget Location</label>
+                   <frontend_model>Carbonclick\CFC\Block\System\Config\Checkbox</frontend_model>
+                </field>
+                <field id="offset" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Offset Amount</label>
+                    <comment>Offset Amount must between 1-100</comment>
+                    <validate>validate-digits validate-digits-range digits-range-1-100</validate>
+                    <backend_model>Carbonclick\CFC\Model\Config\Backend\Offset</backend_model>
+                    <tooltip>The offset amount your customer is offered.</tooltip>
+                </field>
+                <field id="topup" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Topup Amount</label>
+                    <comment>Topup Amount must between 20-5000</comment>
+                    <validate>validate-digits validate-digits-range digits-range-20-5000 validate-preferred-topup</validate>
+                    <tooltip>The amount we will charge your card when your offset credit runs out.</tooltip>
+                    <frontend_model>Carbonclick\CFC\Block\System\Config\Topup</frontend_model>
+                </field>
+                <!-- <field id="theme_instruction" translate="label" type="button" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Theme Install Instructions</label>
+                    <frontend_model>Carbonclick\CFC\Block\System\Config\Button</frontend_model>
+                </field> -->
+                <!-- <field id="request_installation" translate="label" type="button" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Request Installation Help</label>
+                    <frontend_model>Carbonclick\CFC\Block\System\Config\InstallButton</frontend_model>
+                </field> -->
+            </group>
+            <group id="lookandfeel" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Look and Feel</label>
+                <group id="color_guide" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Color Guide</label>
+                    <frontend_model>Carbonclick\CFC\Block\System\Config\ColorGuide</frontend_model>
+                </group>
+
+                <group id="plugincolors" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Plugin Colors</label>
+                    <field id="border_color" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>1. Plugin Border Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="background_color" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>2. Plugin Background Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="background_color_expanded" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>3. Plugin Background Color Expanded</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="icons_color" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>4. Plugin Icons Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="text_color_top_section" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>5. Plugin Text Color Top Section</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="large_text_color_expanded" translate="label comment" type="text" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>6. Plugin Large Text Color Expanded</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                    <field id="small_text_color_expanded" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>7. Plugin Small Text Color Expanded</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                </group>
+
+                <group id="buttoncolors" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Button Colors</label>
+                    <field id="border_color" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>8. Button Border Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="background_color" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>9. Button Background Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="text_color" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>10. Button Text Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="plus_icon_color" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>11. Button Plus Icon Color</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="background_color_selected" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>12. Button Background Color Selected</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="text_color_selected" translate="label comment" type="text" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>13. Button Text Color Selected</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+
+                    <field id="checkmark_icon_selected" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                        <label>14. Button Checkmark Icon Selected</label>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Color</frontend_model>
+                    </field>
+                </group>
+
+                <group id="cfclogo" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Carbonclick Logo</label>
+                    <field id="color_option" type="radios" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <source_model>Carbonclick\CFC\Model\Config\Option</source_model>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Cfclogo</frontend_model>
+                    </field>
+                </group>
+
+                <group id="cfcproductimage" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Carbonclick Product Image</label>
+                    <field id="color_option" type="radios" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <source_model>Carbonclick\CFC\Model\Config\Option</source_model>
+                        <frontend_model>Carbonclick\CFC\Block\System\Config\Cfcproductimage</frontend_model>
+                        <backend_model>Carbonclick\CFC\Model\Config\Backend\Cfcproductimage</backend_model>
+                    </field>
+                </group>
+
+            </group>
+        </section>
+    </system>
+</config>

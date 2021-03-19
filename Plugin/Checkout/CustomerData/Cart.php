@@ -20,6 +20,10 @@ class Cart
     {
         $block = $this->carbonclick->getConfig();
 
+        if(empty($block)){
+            return $result;
+        }
+
         $result['carbonclick_data'] = $block['carbonclick_data'];
 
         return $result;

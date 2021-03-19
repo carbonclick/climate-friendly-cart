@@ -1,0 +1,92 @@
+<?php
+$customerInfo = $block->getFetchcustomer();
+$helper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+$reward = $helper->currency(number_format($customerInfo['reward'], 2), true, false); 
+?>
+
+<div class="climate-reward-wrapper">
+    <div class="climate-reward-inner">
+        <h2><?= __("Climate Friendly Rewards") ?></h2>
+        <p><?= __("You asked, we listened. Climate Friendly Rewards gives your business's sustainability a boost. Use your rewards to start offsetting business emissions, or redeem it for cash to fund those much-needed projects that reduce your ongoing emissions. Feeling generous? Give it away to a tree-planting charity. Learn more about Climate Friendly Rewards ") ?> 
+        	<a target="_blank" class="Polaris-Link" href="https://carbonclick.com/climate-friendly-rewards" rel="noopener noreferrer"><?= __("here") ?> 
+        		<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+        			<path d="M13 12a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H6c-.575 0-1-.484-1-1V7a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2v5h5a1 1 0 0 1 1-1zm-2-7h4v4a1 1 0 1 1-2 0v-.586l-2.293 2.293a.999.999 0 1 1-1.414-1.414L11.586 7H11a1 1 0 0 1 0-2z">
+        			</path>
+        		</svg>
+        	</a>
+        </p>
+        <p><?= __("Climate Friendly Rewards become available when rewards accumulate to US$50. Paid/redeemed quarterly.") ?></p>
+        <div class="reward-bottom-content">
+            <div class="reward-image">                    
+                <img src="<?= $this->getViewFileUrl('Carbonclick_CFC::images/rewards-group.svg') ?>">
+                <div class="reward-amount">
+                	<?= $customerInfo['reward'] == 0 ? "N/A" : '<span id="earned_rewards">'.$reward.'</span>' ?>
+                </div>
+            </div>
+            <div class="reward-item">
+				<button class="reward-btn" <?= (float)$customerInfo['reward'] < 50 ? 'disabled="disabled"' : "" ?> ><?= __("Redeem Climate Friendly Rewards") ?></button>
+                <p><?= __("Available once balance is above %1", $helper->currency(50, true, false)) ?></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="redeem_popup" style="display:none;">
+    <div id="thickbox_content">
+        <h3><?= __("Redeem your Climate Friendly Rewards") ?></h3>
+        <p><?= __("Please select the redemption method:") ?></p>
+        <form method="post" id="reward_submit" action="<?= $block->getUrl('cfc/reward/submit') ?>" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
+        	<?php echo $block->getBlockHtml('formkey'); ?>
+	        <div class="redeem-popup-label-wrapper">
+	            <label>
+	                <input type="radio" name="reward[redeem_method]" checked="checked" value="donate">
+	                <span><?= __("Donate to tree-planting charity") ?></span>
+	            </label>
+
+	            <label>
+	                <input type="radio" name="reward[redeem_method]" value="offset business emissions">
+	                <span><?= __("Use to offset business emissions") ?> </span>
+	            </label>
+
+	            <label>
+	                <input type="radio" name="reward[redeem_method]" value="cash out">
+	                <span><?= __("Cash-out with Paypal and power-up your internal sustainability initiatives") ?></span>
+	            </label>
+	        </div>
+
+	        <div class="redeem-popup-field">
+	            <div class="redeem-field">
+	                <input type="text" value="<?= $this->getUrl() ?>" readonly="readonly">
+	                <span><?= __("The store URL this request is for") ?></span>
+	            </div>
+
+	            <div class="redeem-field">
+	                <input type="email" name="reward[email]" value="<?= $block->getConfig("trans_email/ident_general/email") ?>" data-validate="{'validate-email':true}">
+	                <span><?= __("We'll be in touch at this email") ?></span>
+	            </div>
+	        </div>
+	          
+	        <div class="redeem-popup-request-text">
+	            <p><?= __("Once we receive your request, you will receive a confirmation outlining the next steps.") ?></p>
+	            <span><?= __("Questions? Email") ?> 
+	            	<a target="_blank" href="mailto:hello@carbonclick.com">
+	            		<?= __("hello@carbonclick.com") ?>
+	            	</a>
+	            </span>
+	        </div>
+
+	        <div class="redeem-popup-request-button">
+	            <button type="submit" name="submit_redemption_request" value="submit_redemption_request"><?= __("Submit redemption request") ?></button>
+	        </div>
+       	</form>
+    </div>
+</div>
+<script type="text/x-magento-init"> 
+{ 
+   ".reward-btn": { 
+    "Carbonclick_CFC/js/popup": {} 
+   } 
+} 
+</script>
+
+<?= $block->getLayout()->createBlock('Magento\Backend\Block\Template')->setTemplate('Carbonclick_CFC::hotjar.phtml')->toHtml(); ?>
