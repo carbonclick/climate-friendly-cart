@@ -26,10 +26,6 @@ abstract class AbstractService
 
     protected $jsonHelper;
 
-    protected $cacheTypeList;
-
-    protected $cacheFrontendPool;
-
     protected $logger;
 
     protected $authdata = [];
@@ -46,8 +42,6 @@ abstract class AbstractService
         \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
         \Psr\Log\LoggerInterface $logger
     ) {
         
@@ -60,8 +54,6 @@ abstract class AbstractService
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->curlFactory = $curlFactory;
         $this->jsonHelper = $jsonHelper;
-        $this->cacheTypeList = $cacheTypeList;
-        $this->cacheFrontendPool = $cacheFrontendPool;
         $this->logger = $logger;
     }
 
@@ -71,13 +63,8 @@ abstract class AbstractService
     }
 
     protected function refreshCache(){
-        $types = array('config');
-        foreach ($types as $type) {
-            $this->cacheTypeList->cleanType($type);
-        }
-        foreach ($this->cacheFrontendPool as $cacheFrontend) {
-            $cacheFrontend->getBackend()->clean();
-        }
+        
+        $this->scopeConfig->clean();
     }
 
     public function getConfiguration(){

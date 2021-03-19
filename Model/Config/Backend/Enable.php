@@ -62,9 +62,15 @@ class Enable extends \Magento\Framework\App\Config\Value
      */
     public function beforeSave()
     {
+        if($this->getValue() == 1 && empty($this->updateshop->getShop())){
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Please complete Onboarding Process before enable the extension.')
+            );
+        }
+
         if($this->getValue() == 1 && !in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('We are only supported EUR, USD, AUD, CAD, NZD, and GBP currencies.')
+                __('We are only supported EUR, USD, AUD, CAD, NZD, GBP and ZAR currencies.')
             );    
         }
 
