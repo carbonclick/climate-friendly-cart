@@ -78,8 +78,7 @@ class CreateProduct
 	                'use_config_manage_stock' => 0,
 	                'manage_stock' => 0,
 	                'is_in_stock' => 1,
-	                'use_config_max_sale_qty'=> 0, 
-	                'max_sale_qty' => floor(5000/$this->saveconfig->getConfig("cfc/general/offset"))
+	                'use_config_max_sale_qty'=> 1, 
 	            )
 	        );
 
@@ -138,8 +137,7 @@ class CreateProduct
 		                'use_config_manage_stock' => 0,
 		                'manage_stock' => 0,
 		                'is_in_stock' => 1,
-		                'use_config_max_sale_qty'=> 0, 
-		                'max_sale_qty' => floor(100/$price)
+		                'use_config_max_sale_qty'=> 1
 		            )
 	        	);
 				$product->save();

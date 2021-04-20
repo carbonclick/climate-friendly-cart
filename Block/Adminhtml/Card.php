@@ -23,4 +23,9 @@ class Card extends \Magento\Backend\Block\Template
     public function getCarbonclickConfig(){
         return $this->authentication->getAPIConfig();
     }
+
+    public function getBaseCurrencyCode()
+    {
+        return $this->_storeManager->getStore()->getBaseCurrencyCode();
+    }
 }

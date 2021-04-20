@@ -23,15 +23,15 @@
                 </field>
                 <field id="offset" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Offset Amount</label>
-                    <comment>Offset Amount must between 1-100</comment>
-                    <validate>validate-digits validate-digits-range digits-range-1-100</validate>
+                    <comment>Offset Amount must be greater than or equal to 1</comment>
+                    <validate>validate-digits validate-digits-range digits-range-1-10000000000</validate>
                     <backend_model>Carbonclick\CFC\Model\Config\Backend\Offset</backend_model>
                     <tooltip>The offset amount your customer is offered.</tooltip>
                 </field>
                 <field id="topup" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Topup Amount</label>
-                    <comment>Topup Amount must between 20-5000</comment>
-                    <validate>validate-digits validate-digits-range digits-range-20-5000 validate-preferred-topup</validate>
+                    <comment>Topup Amount must be greater than or equal to 100</comment>
+                    <validate>validate-digits validate-digits-range digits-range-100-10000000000 validate-preferred-topup</validate>
                     <tooltip>The amount we will charge your card when your offset credit runs out.</tooltip>
                     <frontend_model>Carbonclick\CFC\Block\System\Config\Topup</frontend_model>
                     <backend_model>Carbonclick\CFC\Model\Config\Backend\Topup</backend_model>

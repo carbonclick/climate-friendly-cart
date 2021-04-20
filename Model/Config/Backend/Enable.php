@@ -15,8 +15,8 @@ class Enable extends \Magento\Framework\App\Config\Value
 
     protected $updateshop;
 
-    private $currency = ['EUR', 'NZD', 'CAD', 'USD', 'GBP', 'AUD','ZAR'];
-
+    private $currency = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF','KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
+    
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -68,9 +68,9 @@ class Enable extends \Magento\Framework\App\Config\Value
             );
         }
 
-        if($this->getValue() == 1 && !in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
+        if($this->getValue() == 1 && in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('We are only supported EUR, USD, AUD, CAD, NZD, GBP and ZAR currencies.')
+                __('We are not supported Zero-decimal currencies.')
             );    
         }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
 	<!-- NB DO NOT CHANGE THE VALUE the setup_version attribute. Our make script performs a search/replace on this to insert the build pipeline number. -->
-    <module name="Carbonclick_CFC" setup_version="1.0.62">
+    <module name="Carbonclick_CFC" setup_version="1.0.64">
     </module>
 </config>

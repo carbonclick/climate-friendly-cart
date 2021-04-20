@@ -13,7 +13,7 @@ class Base
 
     protected $updateshop;
 
-    private $currency = ['EUR', 'NZD', 'CAD', 'USD', 'GBP', 'AUD','ZAR'];
+    private $currency = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF','KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
 
     public function __construct(
         \Carbonclick\CFC\Model\CreateProduct $cfcproduct,
@@ -29,7 +29,7 @@ class Base
         \Magento\Config\Model\Config\Backend\Currency\Base $subject,
         $result
     ) {
-        if(!in_array($subject->getValue(), $this->currency)){
+        if(in_array($subject->getValue(), $this->currency)){
             $this->configSave->saveConfig('cfc/general/enable',0);
             $this->cfcproduct->UpdateStatus(0);
             $this->updateshop->UpdateShop(['setup'=>false]);

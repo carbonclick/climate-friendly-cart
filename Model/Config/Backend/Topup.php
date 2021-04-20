@@ -44,7 +44,6 @@ class Topup extends \Magento\Framework\App\Config\Value
     public function afterSave()
     { 
         if ($this->isValueChanged()) {
-             $this->cfcproduct->UpdatePrice($this->getValue());
              $this->updateshop->UpdateShop(['preferred_topup'=>$this->getValue()]);
         }
         return parent::afterSave();
