@@ -18,7 +18,7 @@ class Cfcproductimage extends \Magento\Config\Block\System\Config\Form\Field
         $output = parent::_getElementHtml($element);
         $value = $element->getData('value');
         $name = $element->getData('name');
-        if($value){
+        if ($value) {
             $filename = "cloud-".$value.".png";
             $output .= '
                 <div id="carbonclick_product_image_preview" class="inner-logo-bg co2-logo '.$value.'">
@@ -28,9 +28,9 @@ class Cfcproductimage extends \Magento\Config\Block\System\Config\Form\Field
                         </div>
                     </fieldset>
                 </div>
-            ';    
+            ';
         }
-		$output .= '
+        $output .= '
         <script type="text/javascript">
             require(["jquery"], function($) {
                 $(function() {

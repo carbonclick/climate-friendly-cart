@@ -3,20 +3,20 @@
 <?php $priceHelper = $block->getPriceHelper(); ?>
 <div class="cfc-loading"></div>
 <form method="post" id="cfc_form" action="<?= $block->getUrl('cfc/card/updatecard') ?>" enctype="multipart/form-data">
-	<?php echo $block->getBlockHtml('formkey'); ?>
-	<div class="card-manager-tab-bg">
-    	<div class="carddetails">
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <div class="card-manager-tab-bg">
+        <div class="carddetails">
             <table cellspacing="0" cellpadding="0">
                 <tbody>
-                	<tr>
-	                    <th><?= __('Offset Credit Balance') ?></th>
-	                    <th><?= __('Card') ?></th>
-	                </tr>
-	                <tr>
-	                    <td><?= $priceHelper->currency($fetchcustomer['topup'],true,false) ?></td>
-	                    <td><span class="last4">**** **** **** <?= $fetchcustomer['data']['last4'] ?></span></td>
-	                </tr>
-            	</tbody>
+                    <tr>
+                        <th><?= __('Offset Credit Balance') ?></th>
+                        <th><?= __('Card') ?></th>
+                    </tr>
+                    <tr>
+                        <td><?= $priceHelper->currency($fetchcustomer['topup'], true, false) ?></td>
+                        <td><span class="last4">**** **** **** <?= $fetchcustomer['data']['last4'] ?></span></td>
+                    </tr>
+                </tbody>
             </table>
             <a href="#" class="edit edit-card"><?= __('Update Card') ?></a>
         </div>
@@ -50,35 +50,35 @@
                 </div>
                 <div id="card-errors" class="stripe-error" role="alert"></div>
             </div>
-	        <div class="cfc-step-btn">
-	            <button name="updatecard" disabled="disabled" class="button-primary cfc-stripe-payment" type="submit" value="update"><?= __('Save') ?></button>
-	        </div>
+            <div class="cfc-step-btn">
+                <button name="updatecard" disabled="disabled" class="button-primary cfc-stripe-payment" type="submit" value="update"><?= __('Save') ?></button>
+            </div>
         </div>
     </div>
 </form>
 <script type="text/javascript">
-	require([
-	    'jquery',
-	    'mage/mage'
-	], function($){
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($){
 
-		// Set your publishable key: remember to change this to your live publishable key in production
-    	// See your keys here: https://dashboard.stripe.com/account/apikeys
-		var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
-		var form = document.getElementById('cfc_form');
-	    var elements = stripe.elements({
-	        fonts: [
-	          {
-	            cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
-	          }
-	        ],
-	        // Stripe's examples are localized to specific languages, but if
-	        // you wish to have Elements automatically detect your user's locale,
-	        // use `locale: 'auto'` instead.
-	        locale: 'auto'
-	      });
+        // Set your publishable key: remember to change this to your live publishable key in production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
+        var form = document.getElementById('cfc_form');
+        var elements = stripe.elements({
+            fonts: [
+              {
+                cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+              }
+            ],
+            // Stripe's examples are localized to specific languages, but if
+            // you wish to have Elements automatically detect your user's locale,
+            // use `locale: 'auto'` instead.
+            locale: 'auto'
+          });
 
-	    // Floating labels
+        // Floating labels
         var inputs = document.querySelectorAll('.card-element .input');
         Array.prototype.forEach.call(inputs, function(input) {
             input.addEventListener('focus', function() {
@@ -96,7 +96,7 @@
             });
         });
 
-	    var elementStyles = {
+        var elementStyles = {
             base: {
                 color: '#32325D',
                 fontWeight: 500,
@@ -235,9 +235,9 @@
 
         registerElements([cardNumber, cardExpiry, cardCvc], 'card-element', stripe, form);
 
-	    // Create a token or display an error when the form is submitted.
-	    form.addEventListener('submit', function(event) {
-	      	event.preventDefault();
+        // Create a token or display an error when the form is submitted.
+        form.addEventListener('submit', function(event) {
+              event.preventDefault();
 
             var plainInputsValid = true;
             Array.prototype.forEach.call(form.querySelectorAll('input'), function(
@@ -304,13 +304,13 @@
                     });
                 }
             });
-	    });
+        });
 
-	    $("a.edit-card").click(function(e) {
-	        e.preventDefault();
-	        $('.update-card-details').toggle();
-	    });
-	});
+        $("a.edit-card").click(function(e) {
+            e.preventDefault();
+            $('.update-card-details').toggle();
+        });
+    });
     
     
 </script>

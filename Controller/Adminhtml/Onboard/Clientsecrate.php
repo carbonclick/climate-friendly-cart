@@ -4,7 +4,8 @@ namespace Carbonclick\CFC\Controller\Adminhtml\Onboard;
 use Magento\Framework\Controller\Result\JsonFactory;
 
 class Clientsecrate extends \Magento\Backend\App\Action
-{   
+{
+
 
     protected $_resultJsonFactory;
 
@@ -14,8 +15,7 @@ class Clientsecrate extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Carbonclick\CFC\Model\Service\Cfc\Clientsecrate $clientsecrate,
         JsonFactory $resultJsonFactory
-    )
-    {
+    ) {
         $this->_resultJsonFactory = $resultJsonFactory;
         $this->clientsecrate = $clientsecrate;
         parent::__construct($context);
@@ -26,10 +26,10 @@ class Clientsecrate extends \Magento\Backend\App\Action
         $result = $this->_resultJsonFactory->create();
 
         $secratekey = $this->clientsecrate->Clientsecrate();
-        if($secratekey){
+        if ($secratekey) {
             $result->setData($secratekey);
-        }else{
-            $result->setData(["error"=> true]);     
+        } else {
+            $result->setData(["error"=> true]);
         }
         
         return $result;

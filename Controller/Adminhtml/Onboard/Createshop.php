@@ -1,7 +1,6 @@
 <?php
 namespace Carbonclick\CFC\Controller\Adminhtml\Onboard;
 
-
 class Createshop extends \Magento\Backend\App\Action
 {
     protected $createshop;
@@ -12,8 +11,7 @@ class Createshop extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Carbonclick\CFC\Model\Service\Cfc\CreateShop $createshop,
         \Carbonclick\CFC\Model\CreateProduct $createproduct
-    )
-    {
+    ) {
         $this->createshop = $createshop;
         $this->createproduct = $createproduct;
         parent::__construct($context);
@@ -23,17 +21,16 @@ class Createshop extends \Magento\Backend\App\Action
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $shop = $this->createshop->getShop();
-        if(empty($shop)){
+        if (empty($shop)) {
             $shop = $this->createshop->CreateShop($this->getRequest()->getParam('stripeToken'));
         }
-        if(!empty($shop)){
+        if (!empty($shop)) {
             $this->createproduct->CreateProduct();
             $resultRedirect->setPath('*/dashboard/index');
-            return $resultRedirect;    
-        }    
+            return $resultRedirect;
+        }
         $resultRedirect->setPath('*/*/index');
         return $resultRedirect;
-
     }
 
     /**

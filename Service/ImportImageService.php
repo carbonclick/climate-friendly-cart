@@ -1,6 +1,7 @@
 <?php
 
 namespace Carbonclick\CFC\Service;
+
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem\Io\File;

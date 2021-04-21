@@ -2,7 +2,6 @@
 
 namespace Carbonclick\CFC\Model\Service;
 
-
 abstract class AbstractService
 {
     // DO NOT CHANGE THE THE VALUE OF THIS VARIABLE . Our make script performs a search/replace on this to insert the correct url for each environment.
@@ -62,51 +61,56 @@ abstract class AbstractService
         return $this->scopeConfig->getValue($path);
     }
 
-    protected function refreshCache(){
+    protected function refreshCache()
+    {
         
         $this->scopeConfig->clean();
     }
 
-    public function getConfiguration(){
+    public function getConfiguration()
+    {
         $params = [
             'type'=>'magento'
         ];
 
-        try{
+        try {
             $this->curl->setOption(CURLOPT_TIMEOUT, 60);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
             $this->curl->post(self::CARBONCLICK_CONFIG_URL.'api/carbonclick/config', $this->jsonHelper->jsonEncode($params));
             $response = $this->curl->getBody();
 
-            if($this->curl->getStatus() == 200){
+            if ($this->curl->getStatus() == 200) {
                 return $response;
-            }else{
-                throw new \Exception($response);   
+            } else {
+                throw new \Exception($response);
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             return;
         }
         return;
     }
 
-    public function getAPIConfig(){
-        if(empty($this->apiConfig)){
+    public function getAPIConfig()
+    {
+        if (empty($this->apiConfig)) {
             $config = $this->getConfiguration();
-            if($config){
+            if ($config) {
                 $this->setAPIConfig($this->jsonHelper->jsonDecode($config));
             }
         }
         return $this->apiConfig;
     }
 
-    public function setAPIConfig($data = []){
+    public function setAPIConfig($data = [])
+    {
         $this->apiConfig = $data;
         return $this;
     }
 
-    public function getOrderCount(){
+    public function getOrderCount()
+    {
         $ordercollection = $this->orderCollectionFactory->create();
         return $ordercollection->count();
     }

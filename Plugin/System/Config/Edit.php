@@ -22,13 +22,13 @@ class Edit
     public function beforeExecute(
         \Magento\Config\Controller\Adminhtml\System\Config\Edit $subject
     ) {
-        if($subject->getRequest()->getParam('section') == "cfc"){
+        if ($subject->getRequest()->getParam('section') == "cfc") {
             $notice = $this->helper->getConfig('cfc/general/payment');
-            if($notice){
+            if ($notice) {
                 $this->messageManager->addNotice($notice);
             }
             $invoicenotice = $this->helper->getConfig('cfc/general/invoice');
-            if($invoicenotice){
+            if ($invoicenotice) {
                 $this->messageManager->addNotice($invoicenotice);
             }
         }

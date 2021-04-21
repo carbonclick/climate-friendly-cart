@@ -26,8 +26,7 @@ class Dashboard extends \Magento\Backend\Block\Template
         \Magento\Framework\Pricing\Helper\Data $priceHelper,
         \Carbonclick\CFC\Model\Service\Cfc\MerchantImpact $merchantImpact,
         array $data = []
-    )
-    {
+    ) {
         $this->fetchcustomer = $fetchcustomer;
         $this->impactall = $Impactall;
         $this->orderCollectionFactory = $orderCollectionFactory;
@@ -36,54 +35,62 @@ class Dashboard extends \Magento\Backend\Block\Template
         parent::__construct($context, $data);
     }
 
-    public function getFetchcustomer(){
+    public function getFetchcustomer()
+    {
         return $this->fetchcustomer->getCustomerInfo();
     }
 
-    public function getImpactall(){
+    public function getImpactall()
+    {
         return $this->impactall->getImpactAlldata();
     }
 
-    public function getTotalOrder(){
+    public function getTotalOrder()
+    {
         $ordercollection = $this->orderCollectionFactory->create();
         return $ordercollection->count();
     }
 
-    public function getOrderwithOffset($offsetOrders){
-        if($this->getTotalOrder() > 0){
-            return $offsetOrders * 100 / $this->getTotalOrder();    
+    public function getOrderwithOffset($offsetOrders)
+    {
+        if ($this->getTotalOrder() > 0) {
+            return $offsetOrders * 100 / $this->getTotalOrder();
         }
         return 0;
     }
 
-    public function getPriceHelper(){
+    public function getPriceHelper()
+    {
         return $this->priceHelper;
     }
 
-    public function getMerchantImpact(){
+    public function getMerchantImpact()
+    {
         return $this->merchantImpact->getMerchantImpact();
     }
 
-    public function getConfig($path){
+    public function getConfig($path)
+    {
         return $this->merchantImpact->getConfig("cfc/dashboard/".$path);
     }
 
-    public function ConvertToStoreWeight($weight,$unit){
+    public function ConvertToStoreWeight($weight, $unit)
+    {
         $weightUnit = $this->merchantImpact->getConfig("general/locale/weight_unit");
-        if($weight == 0){
+        if ($weight == 0) {
             return 'N/A';
         }
 
-        if($weightUnit == "kgs"){
-            return number_format($weight,0)." ".$unit;
-        }elseif($weightUnit == "lbs"){
-            return number_format($weight*2.20462262185,0)." ".strtoupper($weightUnit);
+        if ($weightUnit == "kgs") {
+            return number_format($weight, 0)." ".$unit;
+        } elseif ($weightUnit == "lbs") {
+            return number_format($weight*2.20462262185, 0)." ".strtoupper($weightUnit);
         }
-        return number_format($weight,0)." ".$unit;
-
+        return number_format($weight, 0)." ".$unit;
     }
 
-    public function getfullpathConfig($path){
+    public function getfullpathConfig($path)
+    {
         return $this->merchantImpact->getConfig($path);
     }
 }

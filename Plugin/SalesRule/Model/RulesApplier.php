@@ -35,9 +35,9 @@ class RulesApplier
         $skipValidation,
         $couponCode
     ) {
-        if($this->helper->getConfig('cfc/general/enable') == 1 && $this->helper->getConfig('cfc/general/product')){
-            if($item->getProductId() == $this->helper->getConfig('cfc/general/product')){
-                $rules = $this->ruleCollection->create()->addFieldToSelect('*')->addFieldToFilter("coupon_type", ["eq"=>1])->addFieldToFilter("is_active", ["eq"=>1]); 
+        if ($this->helper->getConfig('cfc/general/enable') == 1 && $this->helper->getConfig('cfc/general/product')) {
+            if ($item->getProductId() == $this->helper->getConfig('cfc/general/product')) {
+                $rules = $this->ruleCollection->create()->addFieldToSelect('*')->addFieldToFilter("coupon_type", ["eq"=>1])->addFieldToFilter("is_active", ["eq"=>1]);
             }
         }
         $result = $proceed($item, $rules, $skipValidation, $couponCode);

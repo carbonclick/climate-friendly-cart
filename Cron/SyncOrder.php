@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Carbonclick\CFC\Cron;
 
 use Carbonclick\CFC\Model\Service\Cfc\Purchases;
@@ -10,7 +10,8 @@ use Magento\Framework\UrlInterface;
 use Magento\Sales\Model\ResourceModel\Order;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 
-class SyncOrder {
+class SyncOrder
+{
 
     protected $purchases;
 
@@ -28,7 +29,7 @@ class SyncOrder {
 
     protected $_logger;
 
-	public function __construct(
+    public function __construct(
         Purchases $purchases,
         UpdateShop $updateshop,
         Email $helper,
@@ -50,20 +51,20 @@ class SyncOrder {
 
     public function execute()
     {
-    	$orders = $this->getOrderCollection();
+        $orders = $this->getOrderCollection();
 
         $productId = $this->helper->getConfig('cfc/general/product');
         foreach ($orders as $order) {
             $showcart = [];
             foreach ($order->getAllVisibleItems() as $item) {
-                if($item->getProductId() == $productId){
-                    $shippingaddress = $order->getShippingAddress(); 
+                if ($item->getProductId() == $productId) {
+                    $shippingaddress = $order->getShippingAddress();
                     $billingaddress = $order->getBillingAddress();
                     $street = $billingaddress->getStreet();
                     $preferred_topup = $this->helper->getConfig('cfc/general/topup');
-                    if($item->getBaseRowTotal() > $preferred_topup){
+                    if ($item->getBaseRowTotal() > $preferred_topup) {
                         $preferred_topup = $item->getBaseRowTotal();
-                    } 
+                    }
                     $params = [
                         "email" => $order->getCustomerEmail(),
                         "name"=> "#".$order->getIncrementId(),
@@ -74,7 +75,7 @@ class SyncOrder {
                         "quantity"=> (int)$item->getQtyOrdered(),
                         "tax"=> $item->getBaseTaxAmount(),
                         "total_price"=> $item->getBaseRowTotal(),
-                        "order_status_url"=> $this->urlinterface->getUrl('sales/order/view',["order_id"=>$order->getEntityId()]),
+                        "order_status_url"=> $this->urlinterface->getUrl('sales/order/view', ["order_id"=>$order->getEntityId()]),
                         "gateway"=> $order->getPayment()->getMethodInstance()->getTitle(),
                         "city"=> $shippingaddress->getCity(),
                         "country"=> $this->getCountryname($shippingaddress->getCountryId()),
@@ -88,7 +89,7 @@ class SyncOrder {
                             "country"=> $this->getCountryname($billingaddress->getCountryId()),
                             "address1"=> count($street) > 0 ? $street[0] : "",
                             "address2"=> count($street) > 1 ? $street[1] : "",
-                            "province"=> $billingaddress->getRegion(), 
+                            "province"=> $billingaddress->getRegion(),
                             "last_name"=> $billingaddress->getLastname(),
                             "first_name"=> $billingaddress->getFirstname(),
                             "country_code"=> $billingaddress->getCountryId(),
@@ -97,12 +98,12 @@ class SyncOrder {
                     ];
                     //$this->_logger->log(100,print_r($params,true));
                     $purchase = $this->purchases->sendPurchaseRequest($params);
-                    if($purchase){
+                    if ($purchase) {
                         $order->setCarbonclickSyncFailed(0);
-                    }else{
+                    } else {
                         $order->setCarbonclickSyncFailed(1);
                     }
-                    $this->OrderResource->saveAttribute($order,'carbonclick_sync_failed');  
+                    $this->OrderResource->saveAttribute($order, 'carbonclick_sync_failed');
                     $showcart['last_impression'] = true;
                     break;
                 }
@@ -111,18 +112,18 @@ class SyncOrder {
         }
     }
 
-    public function getCountryname($countryCode){    
+    public function getCountryname($countryCode)
+    {
         $country = $this->countryfactory->create()->loadByCode($countryCode);
         return $country->getName();
     }
 
     public function getOrderCollection()
-   {
-       $collection = $this->_orderCollectionFactory->create()
+    {
+        $collection = $this->_orderCollectionFactory->create()
          ->addAttributeToSelect('*')
-         ->addFieldToFilter('carbonclick_sync_failed',['eq'=>1]);
+         ->addFieldToFilter('carbonclick_sync_failed', ['eq'=>1]);
      
         return $collection;
     }
-
 }

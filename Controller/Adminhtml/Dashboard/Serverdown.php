@@ -1,9 +1,9 @@
 <?php
 namespace Carbonclick\CFC\Controller\Adminhtml\Dashboard;
 
-
 class Serverdown extends \Magento\Backend\App\Action
-{   
+{
+
 
     protected $createshop;
 
@@ -12,15 +12,14 @@ class Serverdown extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Carbonclick\CFC\Model\Service\Cfc\CreateShop $createshop
-    )
-    {
+    ) {
         $this->createshop = $createshop;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        if(!empty($this->createshop->getConfiguration())){
+        if (!empty($this->createshop->getConfiguration())) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/dashboard/index');
             return $resultRedirect;

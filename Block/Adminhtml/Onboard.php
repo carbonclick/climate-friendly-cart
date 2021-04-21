@@ -19,30 +19,30 @@ class Onboard extends \Magento\Backend\Block\Template
         Impactall $impactall,
         \Magento\Framework\Registry $registry,
         array $data = []
-    )
-    {
+    ) {
         $this->impactall = $impactall;
         $this->registry = $registry;
         parent::__construct($context, $data);
     }
 
-    public function getImpactData(){
+    public function getImpactData()
+    {
         $impactall = $this->registry->registry('impactall');
-       if($impactall){
+        if ($impactall) {
             return $impactall;
-       } 
-       return $this->impactall->getImpactAlldata();
+        }
+        return $this->impactall->getImpactAlldata();
     }
 
-    public function ConvertToStoreWeight($weight,$unit){
+    public function ConvertToStoreWeight($weight, $unit)
+    {
         $weightUnit = $this->impactall->getConfig("general/locale/weight_unit");
 
-        if($weightUnit == "kgs"){
-            return '<span class="cfc-stat-number">'.number_format($weight,0)."</span> ".$unit;
-        }elseif($weightUnit == "lbs"){
-            return '<span class="cfc-stat-number">'.number_format($weight*2.20462262185 ,0)."</span> ".strtoupper($weightUnit);
+        if ($weightUnit == "kgs") {
+            return '<span class="cfc-stat-number">'.number_format($weight, 0)."</span> ".$unit;
+        } elseif ($weightUnit == "lbs") {
+            return '<span class="cfc-stat-number">'.number_format($weight*2.20462262185, 0)."</span> ".strtoupper($weightUnit);
         }
-        return '<span class="cfc-stat-number">'.number_format($weight,0)."</span> ".$unit;
-
+        return '<span class="cfc-stat-number">'.number_format($weight, 0)."</span> ".$unit;
     }
 }

@@ -18,7 +18,7 @@ class Cfclogo extends \Magento\Config\Block\System\Config\Form\Field
         $output = parent::_getElementHtml($element);
         $value = $element->getData('value');
         $name = $element->getData('name');
-        if($value){
+        if ($value) {
             $filename = "carbonclick-logo-".$value."-picker.svg";
             $output .= '
                 <div id="carbonclick_logo_preview" class="inner-logo-bg '.$value.'">
@@ -28,9 +28,9 @@ class Cfclogo extends \Magento\Config\Block\System\Config\Form\Field
                         </div>
                     </fieldset>
                 </div>
-            ';    
+            ';
         }
-		$output .= '
+        $output .= '
         <script type="text/javascript">
             require(["jquery"], function($) {
                 $(function() {

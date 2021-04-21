@@ -25,15 +25,15 @@ class Topup extends \Magento\Framework\App\Config\Value
         array $data = []
     ) {
        
-       $this->cfcproduct = $cfcproduct;
-       $this->updateshop = $updateshop; 
+        $this->cfcproduct = $cfcproduct;
+        $this->updateshop = $updateshop;
         parent::__construct(
-            $context, 
-            $registry, 
-            $config, 
-            $cacheTypeList, 
-            $resource, 
-            $resourceCollection, 
+            $context,
+            $registry,
+            $config,
+            $cacheTypeList,
+            $resource,
+            $resourceCollection,
             $data
         );
     }
@@ -42,11 +42,10 @@ class Topup extends \Magento\Framework\App\Config\Value
      * @return $this
      */
     public function afterSave()
-    { 
+    {
         if ($this->isValueChanged()) {
              $this->updateshop->UpdateShop(['preferred_topup'=>$this->getValue()]);
         }
         return parent::afterSave();
     }
-
 }

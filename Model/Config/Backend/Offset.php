@@ -24,14 +24,14 @@ class Offset extends \Magento\Framework\App\Config\Value
         array $data = []
     ) {
        
-       $this->cfcproduct = $cfcproduct; 
+        $this->cfcproduct = $cfcproduct;
         parent::__construct(
-            $context, 
-            $registry, 
-            $config, 
-            $cacheTypeList, 
-            $resource, 
-            $resourceCollection, 
+            $context,
+            $registry,
+            $config,
+            $cacheTypeList,
+            $resource,
+            $resourceCollection,
             $data
         );
     }
@@ -40,11 +40,10 @@ class Offset extends \Magento\Framework\App\Config\Value
      * @return $this
      */
     public function afterSave()
-    { 
+    {
         if ($this->isValueChanged()) {
              $this->cfcproduct->UpdatePrice($this->getValue());
         }
         return parent::afterSave();
     }
-
 }

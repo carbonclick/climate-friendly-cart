@@ -14,13 +14,13 @@ class Card extends \Magento\Backend\Block\Template
         \Magento\Backend\Block\Template\Context $context,
         \Carbonclick\CFC\Model\Service\Cfc\Authentication $authentication,
         array $data = []
-    )
-    {
+    ) {
         $this->authentication = $authentication;
         parent::__construct($context, $data);
     }
 
-    public function getCarbonclickConfig(){
+    public function getCarbonclickConfig()
+    {
         return $this->authentication->getAPIConfig();
     }
 

@@ -1,38 +1,37 @@
 <?php
 namespace Carbonclick\CFC\Controller\Adminhtml\Reward;
 
-
 class Index extends \Magento\Backend\App\Action
-{   
+{
+
     protected $createshop;
 
     protected $registry;
 
-	public function __construct(
+    public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Carbonclick\CFC\Model\Service\Cfc\CreateShop $createshop
-    )
-    {
+    ) {
         $this->createshop = $createshop;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        if(empty($this->createshop->getConfiguration())){
+        if (empty($this->createshop->getConfiguration())) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/dashboard/serverdown');
             return $resultRedirect;
         }
         $notice = $this->createshop->getConfig('cfc/general/payment');
-        if($notice){
+        if ($notice) {
             $this->messageManager->addNotice($notice);
         }
         $invoicenotice = $this->createshop->getConfig('cfc/general/invoice');
-        if($invoicenotice){
+        if ($invoicenotice) {
             $this->messageManager->addNotice($invoicenotice);
         }
-    	if(empty($this->createshop->getShop())){
+        if (empty($this->createshop->getShop())) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/onboard/index');
             return $resultRedirect;

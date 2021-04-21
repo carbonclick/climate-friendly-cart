@@ -2,49 +2,51 @@
 
 namespace Carbonclick\CFC\Model\Service\Cfc;
 
-
 class CreateShop extends Authentication
 {
 
-    public function getShop(){
+    public function getShop()
+    {
         $shopdata = $this->getConfig('cfc/general/shop');
-        if($shopdata){
+        if ($shopdata) {
             return $this->jsonHelper->jsonDecode($shopdata);
         }
         return;
     }
 
-    public function CreateShop($stripetoken){
-		$shopdata = $this->SendCreateShopRequest($stripetoken);
-		if($shopdata){
+    public function CreateShop($stripetoken)
+    {
+        $shopdata = $this->SendCreateShopRequest($stripetoken);
+        if ($shopdata) {
             $shopdataresponse = $this->jsonHelper->jsonDecode($shopdata);
-            if($shopdataresponse['success'] == false){
+            if ($shopdataresponse['success'] == false) {
                 $this->messageManager->addError($shopdataresponse['message']);
-            }else{
-                $this->configWriter->save('cfc/general/shop',$this->jsonHelper->jsonEncode($shopdataresponse));
-                if($shopdataresponse['mode'] == "postpaid"){
-                    $this->configWriter->save('cfc/general/prepaid',0);
-                    $this->configWriter->save('cfc/general/postpaid',1);
-                }else{
-                    $this->configWriter->save('cfc/general/prepaid',1);
-                    $this->configWriter->save('cfc/general/postpaid',0);
+            } else {
+                $this->configWriter->save('cfc/general/shop', $this->jsonHelper->jsonEncode($shopdataresponse));
+                if ($shopdataresponse['mode'] == "postpaid") {
+                    $this->configWriter->save('cfc/general/prepaid', 0);
+                    $this->configWriter->save('cfc/general/postpaid', 1);
+                } else {
+                    $this->configWriter->save('cfc/general/prepaid', 1);
+                    $this->configWriter->save('cfc/general/postpaid', 0);
                 }
                 $this->refreshCache();
-                return $shopdataresponse;    
+                return $shopdataresponse;
             }
             
-		}
-    	return;
+        }
+        return;
     }
 
-    private function SendCreateShopRequest($stripetoken){
-    	
+    private function SendCreateShopRequest($stripetoken)
+    {
+        
         $storename = $this->getConfig("general/store_information/name");
-        if(empty($storename)){
+        if (empty($storename)) {
             $user = $this->authSession->getUser();
-            if($user){
-                $storename = $user->getFirstname().' '.$user->getLastname() ;    
-            }else{
+            if ($user) {
+                $storename = $user->getFirstname().' '.$user->getLastname() ;
+            } else {
                 $storename = $this->getConfig("web/secure/base_url");
             }
             
@@ -65,32 +67,33 @@ class CreateShop extends Authentication
             'description'=>""
         ];
 
-        if($stripetoken == "postpaid"){
+        if ($stripetoken == "postpaid") {
             $params['mode'] = "postpaid";
-        }else{
+        } else {
             $params['setupintent_id'] = $stripetoken;
             $params['mode'] = "prepaid";
         }
 
-    	try{
+        try {
             $this->curl->setOption(CURLOPT_TIMEOUT, 60);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->post(self::CARBONCLICK_CONFIG_URL.'api/shops',$this->jsonHelper->jsonEncode($params));
+            $this->curl->post(self::CARBONCLICK_CONFIG_URL.'api/shops', $this->jsonHelper->jsonEncode($params));
             $response = $this->curl->getBody();
-            if($this->curl->getStatus() == 200){
+            if ($this->curl->getStatus() == 200) {
                 return $response;
-            }else{
-                throw new \Exception($response);   
+            } else {
+                throw new \Exception($response);
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             return;
         }
         return;
     }
 
-    private function getCurrencyCode(){
+    private function getCurrencyCode()
+    {
         return $this->storeManager->getStore()->getBaseCurrencyCode();
     }
 }

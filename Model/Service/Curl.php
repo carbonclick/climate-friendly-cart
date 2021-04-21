@@ -2,7 +2,6 @@
 
 namespace Carbonclick\CFC\Model\Service;
 
-
 class Curl extends \Magento\Framework\HTTP\Client\Curl
 {
 
@@ -52,7 +51,7 @@ class Curl extends \Magento\Framework\HTTP\Client\Curl
             $this->curlOption(CURLOPT_HTTPGET, 1);
         } else {
             $this->curlOption(CURLOPT_CUSTOMREQUEST, $method);
-            if(!empty($params)){
+            if (!empty($params)) {
                 $this->curlOption(CURLOPT_POSTFIELDS, is_array($params) ? http_build_query($params) : $params);
             }
         }

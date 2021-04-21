@@ -24,15 +24,15 @@ class AbstractCondition
         \Closure $proceed,
         $model
     ) {
-        if($this->helper->getConfig('cfc/general/enable') == 1 && $this->helper->getConfig('cfc/general/product')){
-            if($subject->getAttribute()){
-                if($model instanceof \Magento\Quote\Model\Quote\Address){
+        if ($this->helper->getConfig('cfc/general/enable') == 1 && $this->helper->getConfig('cfc/general/product')) {
+            if ($subject->getAttribute()) {
+                if ($model instanceof \Magento\Quote\Model\Quote\Address) {
                     $subtotal = $model->getBaseSubtotal();
                     $totalQty = $model->getTotalQty();
                     $subwithdiscount = $model->getBaseSubtotalWithDiscount();
                     $items = $model->getAllVisibleItems();
                     foreach ($items as $item) {
-                        if($item->getProductId() == $this->helper->getConfig('cfc/general/product')){
+                        if ($item->getProductId() == $this->helper->getConfig('cfc/general/product')) {
                             $model->setBaseSubtotal($subtotal - $item->getBaseRowTotal());
                             $model->setTotalQty($totalQty - $item->getQty());
                             $model->setBaseSubtotalWithDiscount($subwithdiscount - $item->getBaseRowTotal());
@@ -43,14 +43,14 @@ class AbstractCondition
                     $model->setBaseSubtotal($subtotal);
                     $model->setTotalQty($totalQty);
                     $model->setBaseSubtotalWithDiscount($subwithdiscount);
-                }else{
+                } else {
                     $result = $proceed($model);
                 }
                 
-            }else{
+            } else {
                 $result = $proceed($model);
             }
-        }else{
+        } else {
             $result = $proceed($model);
         }
         return $result;

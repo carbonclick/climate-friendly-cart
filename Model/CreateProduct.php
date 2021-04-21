@@ -11,166 +11,168 @@ use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\App\RequestInterface;
 use Magento\Store\Model\StoreRepository;
 
-
 class CreateProduct
 {
-	protected $product;
+    protected $product;
 
-	protected $saveconfig;
+    protected $saveconfig;
 
-	protected $image;
+    protected $image;
 
-	protected $assetRepo;
+    protected $assetRepo;
 
-	protected $request;
+    protected $request;
 
-	protected $countries;
-	
-	protected $updateshop;
+    protected $countries;
+    
+    protected $updateshop;
 
-	protected $storeRepository;
+    protected $storeRepository;
 
-	protected $logger;
+    protected $logger;
 
-	public function __construct(
-		Product $product,
-		SaveDashboard $saveconfig,
-		ImportImageService $image,
-		Countries $countries,
-		Repository $assetRepo,
-    	RequestInterface $request,
-    	StoreRepository $StoreRepository,
-    	UpdateShop $updateshop,
-    	\Psr\Log\LoggerInterface $logger
-	){
-		$this->product = $product;
-		$this->storeRepository = $StoreRepository;
-		$this->image = $image;
-		$this->countries = $countries;
-		$this->assetRepo = $assetRepo;
-		$this->saveconfig = $saveconfig;
-		$this->request = $request;
-		$this->updateshop = $updateshop;
-		$this->logger = $logger;
-	}
+    public function __construct(
+        Product $product,
+        SaveDashboard $saveconfig,
+        ImportImageService $image,
+        Countries $countries,
+        Repository $assetRepo,
+        RequestInterface $request,
+        StoreRepository $StoreRepository,
+        UpdateShop $updateshop,
+        \Psr\Log\LoggerInterface $logger
+    ) {
+        $this->product = $product;
+        $this->storeRepository = $StoreRepository;
+        $this->image = $image;
+        $this->countries = $countries;
+        $this->assetRepo = $assetRepo;
+        $this->saveconfig = $saveconfig;
+        $this->request = $request;
+        $this->updateshop = $updateshop;
+        $this->logger = $logger;
+    }
 
-    public function CreateProduct(){
-    	$value = $this->saveconfig->getConfig("cfc/lookandfeel/cfcproductimage/color_option");
-    	$filename = "cloud-".$value.".png";
-    	$params = array('_secure' => $this->request->isSecure());
-		$imageUrl = $this->assetRepo->getUrlWithParams('Carbonclick_CFC::images/'.$filename, $params); 
-		$taxId = $this->countries->getStoretaxable() == 1 ? 2 : 0;
-		try{
-			$product = $this->getProduct();
-			$product->setName('Carbon Offset'); 
-			$product->setAttributeSetId(4); 
-			$product->setWebsiteIds($this->getWebsite());
-			$product->setStatus(1);
-			$product->setShortDescription("CarbonClick's carbon offsets help neutralize the carbon emissions from your purchase. Your contribution helps funds forest restoration, tree planting, and clean energy projects that fight climate change. All it takes is a single click at the checkout.");
-			$product->setDescription("CarbonClick's carbon offsets help neutralize the carbon emissions from your purchase. Your contribution helps funds forest restoration, tree planting, and clean energy projects that fight climate change. All it takes is a single click at the checkout.");
-			$product->setVisibility(1);
-			$product->setTaxClassId($taxId);
-			$product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL);
-			$product->setPrice($this->saveconfig->getConfig("cfc/general/offset"));
-			$product->setUrlKey('carbon-offset-'.strtotime("now"));
-			$product->setStockData(
-	            array(
-	                'use_config_manage_stock' => 0,
-	                'manage_stock' => 0,
-	                'is_in_stock' => 1,
-	                'use_config_max_sale_qty'=> 1, 
-	            )
-	        );
+    public function CreateProduct()
+    {
+        $value = $this->saveconfig->getConfig("cfc/lookandfeel/cfcproductimage/color_option");
+        $filename = "cloud-".$value.".png";
+        $params = ['_secure' => $this->request->isSecure()];
+        $imageUrl = $this->assetRepo->getUrlWithParams('Carbonclick_CFC::images/'.$filename, $params);
+        $taxId = $this->countries->getStoretaxable() == 1 ? 2 : 0;
+        try {
+            $product = $this->getProduct();
+            $product->setName('Carbon Offset');
+            $product->setAttributeSetId(4);
+            $product->setWebsiteIds($this->getWebsite());
+            $product->setStatus(1);
+            $product->setShortDescription("CarbonClick's carbon offsets help neutralize the carbon emissions from your purchase. Your contribution helps funds forest restoration, tree planting, and clean energy projects that fight climate change. All it takes is a single click at the checkout.");
+            $product->setDescription("CarbonClick's carbon offsets help neutralize the carbon emissions from your purchase. Your contribution helps funds forest restoration, tree planting, and clean energy projects that fight climate change. All it takes is a single click at the checkout.");
+            $product->setVisibility(1);
+            $product->setTaxClassId($taxId);
+            $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL);
+            $product->setPrice($this->saveconfig->getConfig("cfc/general/offset"));
+            $product->setUrlKey('carbon-offset-'.strtotime("now"));
+            $product->setStockData(
+                [
+                    'use_config_manage_stock' => 0,
+                    'manage_stock' => 0,
+                    'is_in_stock' => 1,
+                    'use_config_max_sale_qty'=> 1,
+                ]
+            );
 
-			$this->image->execute($product,$imageUrl,true,['image', 'small_image', 'thumbnail']);
-			$product->save();
-			$this->saveconfig->saveConfig('cfc/general/product',$product->getId());
-		}catch(\Exception $e){
-			$this->logger->error($e->getMessage());
-		}
-		return $product;
-    	
+            $this->image->execute($product, $imageUrl, true, ['image', 'small_image', 'thumbnail']);
+            $product->save();
+            $this->saveconfig->saveConfig('cfc/general/product', $product->getId());
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+        return $product;
     }
 
     public function getWebsite()
-	{
-	    $stores = $this->storeRepository->getList();
-	    $websiteIds = array();
-	    foreach ($stores as $store) {
-	        $websiteId = $store["website_id"];
-	        array_push($websiteIds, $websiteId);
-	    }
+    {
+        $stores = $this->storeRepository->getList();
+        $websiteIds = [];
+        foreach ($stores as $store) {
+            $websiteId = $store["website_id"];
+            array_push($websiteIds, $websiteId);
+        }
 
-	    return $websiteIds;
-	}
+        return $websiteIds;
+    }
 
-	public function UpdateProductImage($value){
-		$productId = $this->saveconfig->getConfig("cfc/general/product");
-    	$filename = "cloud-".$value.".png";
-    	$params = array('_secure' => $this->request->isSecure());
-		$imageUrl = $this->assetRepo->getUrlWithParams('Carbonclick_CFC::images/'.$filename, $params);
-		try{
-			$product = $this->product;
-			if($productId){
-				$product->load($productId);
-				$this->image->execute($product,$imageUrl,false,['image', 'small_image', 'thumbnail']);
-				$product->save();
-			}
-		}catch(\Exception $e){
-			//echo $e->getMessage(); die;
-			$this->logger->error($e->getMessage());
-		}
-		return $product;
-	}
+    public function UpdateProductImage($value)
+    {
+        $productId = $this->saveconfig->getConfig("cfc/general/product");
+        $filename = "cloud-".$value.".png";
+        $params = ['_secure' => $this->request->isSecure()];
+        $imageUrl = $this->assetRepo->getUrlWithParams('Carbonclick_CFC::images/'.$filename, $params);
+        try {
+            $product = $this->product;
+            if ($productId) {
+                $product->load($productId);
+                $this->image->execute($product, $imageUrl, false, ['image', 'small_image', 'thumbnail']);
+                $product->save();
+            }
+        } catch (\Exception $e) {
+            //echo $e->getMessage(); die;
+            $this->logger->error($e->getMessage());
+        }
+        return $product;
+    }
 
-	public function UpdatePrice($price){
-		$productId = $this->saveconfig->getConfig("cfc/general/product");
-		$taxId = $this->countries->getStoretaxable() == 1 ? 2 : 0;
-		try{
-			$product = $this->product;
-			if($productId){
-				$product->load($productId);
-				$product->setPrice($price);
-				$product->setTaxClassId($taxId);
-				$product->setStockData(
-		            array(
-		                'use_config_manage_stock' => 0,
-		                'manage_stock' => 0,
-		                'is_in_stock' => 1,
-		                'use_config_max_sale_qty'=> 1
-		            )
-	        	);
-				$product->save();
-			}
-		}catch(\Exception $e){
-			$this->logger->error($e->getMessage());
-		}
-		return $product;
-	}
+    public function UpdatePrice($price)
+    {
+        $productId = $this->saveconfig->getConfig("cfc/general/product");
+        $taxId = $this->countries->getStoretaxable() == 1 ? 2 : 0;
+        try {
+            $product = $this->product;
+            if ($productId) {
+                $product->load($productId);
+                $product->setPrice($price);
+                $product->setTaxClassId($taxId);
+                $product->setStockData(
+                    [
+                        'use_config_manage_stock' => 0,
+                        'manage_stock' => 0,
+                        'is_in_stock' => 1,
+                        'use_config_max_sale_qty'=> 1
+                    ]
+                );
+                $product->save();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+        return $product;
+    }
 
-	public function UpdateStatus($status){
-		$productId = $this->saveconfig->getConfig("cfc/general/product");
-		try{
-			$product = $this->product;
-			if($productId){
-				$product->load($productId);
-				$product->setStatus($status == 0 ? 2 : $status);
-				$product->save();
-			}
-		}catch(\Exception $e){
-			$this->logger->error($e->getMessage());
-		}
-		return $product;
-	}
+    public function UpdateStatus($status)
+    {
+        $productId = $this->saveconfig->getConfig("cfc/general/product");
+        try {
+            $product = $this->product;
+            if ($productId) {
+                $product->load($productId);
+                $product->setStatus($status == 0 ? 2 : $status);
+                $product->save();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+        return $product;
+    }
 
-	public function getProduct()
-	{
-		$model = $this->product;
-		$product = $model->loadByAttribute('sku','carbon-offset');
-		if($product && $product->getId()){
-			return $product;
-		}
-		$model->setSku("carbon-offset");
-		return $model;
-	}
+    public function getProduct()
+    {
+        $model = $this->product;
+        $product = $model->loadByAttribute('sku', 'carbon-offset');
+        if ($product && $product->getId()) {
+            return $product;
+        }
+        $model->setSku("carbon-offset");
+        return $model;
+    }
 }

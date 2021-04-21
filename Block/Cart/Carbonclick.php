@@ -33,8 +33,7 @@ class Carbonclick extends \Magento\Framework\View\Element\Template
         \Magento\Checkout\Helper\Cart $cartHelper,
         \Carbonclick\CFC\Model\Service\Cfc\UpdateShop $updateshop,
         array $data = []
-    )
-    {
+    ) {
         $this->helper = $helper;
         $this->impactall = $impactall;
         $this->productRepository = $productRepository;
@@ -44,50 +43,59 @@ class Carbonclick extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
     }
 
-    public function getHelper(){
+    public function getHelper()
+    {
         return $this->helper;
     }
 
-    public function getImpactData(){
-       return $this->impactall->getImpactAlldata(false);
+    public function getImpactData()
+    {
+        return $this->impactall->getImpactAlldata(false);
     }
 
-    public function ConvertToStoreWeight($weight,$unit){
+    public function ConvertToStoreWeight($weight, $unit)
+    {
         $weightUnit = $this->getHelper()->getConfig("general/locale/weight_unit");
-        if($weightUnit == "kgs"){
-            return ['<span class="cfc-stat-number">'.number_format($weight,0)."</span> ",$unit];
-        }elseif($weightUnit == "lbs"){
-            return ['<span class="cfc-stat-number">'.number_format($weight*2.20462262185,0)."</span> ",$weightUnit];
+        if ($weightUnit == "kgs") {
+            return ['<span class="cfc-stat-number">'.number_format($weight, 0)."</span> ",$unit];
+        } elseif ($weightUnit == "lbs") {
+            return ['<span class="cfc-stat-number">'.number_format($weight*2.20462262185, 0)."</span> ",$weightUnit];
         }
-        return ['<span class="cfc-stat-number">'.number_format($weight,0)."</span> ",$unit];
-
+        return ['<span class="cfc-stat-number">'.number_format($weight, 0)."</span> ",$unit];
     }
 
-    public function getProduct(){
+    public function getProduct()
+    {
         return $product = $this->productRepository->getById($this->getProductId());
     }
 
-    public function getProductId(){
+    public function getProductId()
+    {
         return $this->getHelper()->getConfig("cfc/general/product");
     }
 
-    public function getPriceHelper(){
+    public function getPriceHelper()
+    {
         return $this->priceHelper;
     }
 
-    public function getAddtocartUrl($product){
-        return $this->cartHelper->getAddUrl($product,[]);
+    public function getAddtocartUrl($product)
+    {
+        return $this->cartHelper->getAddUrl($product, []);
     }
 
-    public function getCarbonProductFromCart($product){
+    public function getCarbonProductFromCart($product)
+    {
         return $this->cartHelper->getQuote()->getItemByProduct($product);
     }
 
-    public function getRemoveCartUrl($item){
+    public function getRemoveCartUrl($item)
+    {
         return $this->cartHelper->getDeletePostJson($item);
     }
 
-    public function UpdateCartImpression(){
+    public function UpdateCartImpression()
+    {
         return $this->updateshop->UpdateShop(['last_impression'=>true]);
     }
 }

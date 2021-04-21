@@ -11,7 +11,7 @@ use Symfony\Component\Console\Exception\LogicException;
 
 class Postpaid extends Command
 {
-	/**
+    /**
      * @var CreateShop
      */
     private $createshop;
@@ -26,15 +26,15 @@ class Postpaid extends Command
      */
     private $state;
 
-	/**
+    /**
      * Constructor
      *
      * @param CreateShop $createshop
      */
     public function __construct(
-    	CreateShop $createshop,
-    	State $state,
-    	CreateProduct $createproduct
+        CreateShop $createshop,
+        State $state,
+        CreateProduct $createproduct
     ) {
         $this->createshop = $createshop;
         $this->state = $state;
@@ -42,25 +42,25 @@ class Postpaid extends Command
         parent::__construct();
     }
 
-   	protected function configure()
-   	{
-       	$this->setName('carbonclick:postpaid');
-       	$this->setDescription('Set postpaid payment method for carbonclick plugin.');
+    protected function configure()
+    {
+        $this->setName('carbonclick:postpaid');
+        $this->setDescription('Set postpaid payment method for carbonclick plugin.');
        
-       	parent::configure();
-   	}
-   	protected function execute(InputInterface $input, OutputInterface $output)
-   	{
-       	$shopdata = $this->createshop->getShop();
-       	if($shopdata){
-       		throw new LogicException('You are not allowed to change the payment option.');
-       	}else{
-       		$shop = $this->createshop->CreateShop("postpaid");
-       		if(!empty($shop)){
-       			$this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
-       			$this->createproduct->CreateProduct();
-       		}
-       		$output->writeln("Shop is created successfully.");
-       	}
-   	}
+        parent::configure();
+    }
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $shopdata = $this->createshop->getShop();
+        if ($shopdata) {
+            throw new LogicException('You are not allowed to change the payment option.');
+        } else {
+            $shop = $this->createshop->CreateShop("postpaid");
+            if (!empty($shop)) {
+                $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
+                $this->createproduct->CreateProduct();
+            }
+            $output->writeln("Shop is created successfully.");
+        }
+    }
 }

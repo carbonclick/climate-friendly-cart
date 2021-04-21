@@ -12,21 +12,20 @@ class Checkbox implements \Magento\Framework\Option\ArrayInterface
 
         return  [
                     [
-                        'value' => 'cart', 
+                        'value' => 'cart',
                         'label' => __('Most themes have this page which lets user review their cart prior to checkout'),
                         'header_text' => __('Cart Page')
-                    ], 
+                    ],
                     [
-                        'value' => 'mini_cart', 
+                        'value' => 'mini_cart',
                         'label' => __('Also called drawer-cart, some themes have this feature'),
                         'header_text' => __('Mini Cart')
                     ],
                     [
-                        'value' => 'checkout', 
+                        'value' => 'checkout',
                         'label' => __('This is the payment page'),
                         'header_text' => __('Checkout')
                     ]
                 ];
     }
-
 }

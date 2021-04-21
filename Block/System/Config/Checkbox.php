@@ -54,8 +54,8 @@ class Checkbox extends \Magento\Config\Block\System\Config\Form\Field
         return $values;
     }
     /**
-     * 
-     * @param  $name 
+     *
+     * @param  $name
      * @return boolean
      */
     public function getIsChecked($name)
@@ -63,8 +63,8 @@ class Checkbox extends \Magento\Config\Block\System\Config\Form\Field
         return in_array($name, $this->getCheckedValues());
     }
     /**
-     * 
-     *get the checked value from config
+     *
+     * get the checked value from config
      */
     public function getCheckedValues()
     {
@@ -79,7 +79,7 @@ class Checkbox extends \Magento\Config\Block\System\Config\Form\Field
             $this->_values = explode(',', $data);
         }
 
-        if($this->_values && !is_array($this->_values)){
+        if ($this->_values && !is_array($this->_values)) {
             $this->_values = explode(",", $this->_values);
         }
  

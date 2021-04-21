@@ -1,108 +1,108 @@
 <?php $carbonclickconfig = $block->getCarbonclickConfig(); ?>
 <div class="cfc-loading"></div>
 <form method="post" id="cfc_form" action="<?= $block->getUrl('cfc/onboard/createshop') ?>" enctype="multipart/form-data">
-	<?php echo $block->getBlockHtml('formkey'); ?>
-	<div class="cfc-onboading step2" id="step2">
-	     
-	     <div class="cfc-onboading-left">
-	        <div class="cfc-onboading-bg">
-	            <h2><?= __('Your payment details.') ?></h2>
-			    <p><?= __('Nice  work! Your customers are almost ready to start fighting climate change at the checkout.') ?></p>
-	            <div class="cfc-onboading-left-footer">
-	                <img src="<?= $this->getViewFileUrl('Carbonclick_CFC::images/onboard/logo.svg') ?>" />
-	            </div>
-	        </div>
-	    </div>
-	    
-	    <div class="cfc-onboading-right">
-	        <div class="cfc-onboading-bg">
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <div class="cfc-onboading step2" id="step2">
+         
+         <div class="cfc-onboading-left">
+            <div class="cfc-onboading-bg">
+                <h2><?= __('Your payment details.') ?></h2>
+                <p><?= __('Nice  work! Your customers are almost ready to start fighting climate change at the checkout.') ?></p>
+                <div class="cfc-onboading-left-footer">
+                    <img src="<?= $this->getViewFileUrl('Carbonclick_CFC::images/onboard/logo.svg') ?>" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="cfc-onboading-right">
+            <div class="cfc-onboading-bg">
                 <div class="payment-charge-text">
                     <div class="payment-charge-header">
                         <span class="dashicons dashicons-info"></span> <?= __('What will you be charged?') ?>
                     </div>
                     <div class="payment-charge-body">
-                       <?php 
-                            if(isset($carbonclickconfig['plugin']['sub_price']) && $carbonclickconfig['plugin']['sub_price'] == 0){     
-                        ?>                 
-                               <p><?= __('You will be charged 5 %1 now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.',$block->getBaseCurrencyCode()) ?></p>
-                        <?php
-                            } else {                      
-                        ?>
+                       <?php
+                        if (isset($carbonclickconfig['plugin']['sub_price']) && $carbonclickconfig['plugin']['sub_price'] == 0) {
+                            ?>                 
+                               <p><?= __('You will be charged 5 %1 now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.', $block->getBaseCurrencyCode()) ?></p>
+                            <?php
+                        } else {
+                            ?>
                                <p><?= __('After the 14 day free trial you will be charged the monthly subscription price for the app') ?></p>
-                               <p><?= __('You will also be charged 5 %1 now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.',$block->getBaseCurrencyCode()) ?></p>
-                        <?php
-                            }
+                               <p><?= __('You will also be charged 5 %1 now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.', $block->getBaseCurrencyCode()) ?></p>
+                            <?php
+                        }
                         ?>   
                         <p><?= __('As your customers click the \'Green Button\' to purchase offsets, they reimburse you for offset charges.') ?></p>
                     </div>
                 </div>
 
-	            <h3><?= __('Enter You Payment Details') ?></h3>
-	  
-	            <div class="card-element">
-	                <!-- <div class="row">
-	                    <div class="field">
-	                        <input id="card-element-name" class="input empty" type="text" placeholder="Name" required="">
-	                        <label for="card-element-name"><?php /* __('Name on card')  */ ?></label>
-	                        <div class="baseline"></div>
-	                    </div>
-	                </div> -->
-	                <div class="row">
-	                    <div class="field">
-	                        <div id="card-element-card-number" class="input empty"></div>
-	                        <label for="card-element-card-number"><?= __('Card number') ?></label>
-	                        <div class="baseline"></div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                    <div class="field half-width">
-	                        <div id="card-element-card-expiry" class="input empty"></div>
-	                        <label for="card-element-card-expiry"><?= __('Expiry') ?></label>
-	                        <div class="baseline"></div>
-	                    </div>
-	                    <div class="field half-width">
-	                        <div id="card-element-card-cvc" class="input empty"></div>
-	                        <label for="card-element-card-cvc"><?= __('CCV') ?></label>
-	                        <div class="baseline"></div>
-	                    </div>
-	                </div>
-	                <div id="card-errors" class="stripe-error" role="alert"></div>
-	            </div>
-	            <fieldset>
+                <h3><?= __('Enter You Payment Details') ?></h3>
+      
+                <div class="card-element">
+                    <!-- <div class="row">
+                        <div class="field">
+                            <input id="card-element-name" class="input empty" type="text" placeholder="Name" required="">
+                            <label for="card-element-name"><?php /* __('Name on card')  */ ?></label>
+                            <div class="baseline"></div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="field">
+                            <div id="card-element-card-number" class="input empty"></div>
+                            <label for="card-element-card-number"><?= __('Card number') ?></label>
+                            <div class="baseline"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field half-width">
+                            <div id="card-element-card-expiry" class="input empty"></div>
+                            <label for="card-element-card-expiry"><?= __('Expiry') ?></label>
+                            <div class="baseline"></div>
+                        </div>
+                        <div class="field half-width">
+                            <div id="card-element-card-cvc" class="input empty"></div>
+                            <label for="card-element-card-cvc"><?= __('CCV') ?></label>
+                            <div class="baseline"></div>
+                        </div>
+                    </div>
+                    <div id="card-errors" class="stripe-error" role="alert"></div>
+                </div>
+                <fieldset>
                     <input type="checkbox" class="onboarding_agreement" id="agree_tc_rp_pp" value="1" required name="onboarding[agree_tc_rp_pp]"  data-validate="{required:true}"><label for="agree_tc_rp_pp"><?= __('I have read and accept the') ?> <a href="<?= $carbonclickconfig['links']['terms'] ?>" target="_blank"><?= __('Terms and Conditions') ?></a>, <a href="<?= $carbonclickconfig['links']['refund'] ?>" target="_blank"><?= __('Refund Policy') ?></a> <?= __('and') ?> <a href="<?= $carbonclickconfig['links']['privacy'] ?>" target="_blank"><?= __('Privacy Policy') ?></a></label>
                 </fieldset>
-	            <div class="cfc-step-btn">
-	                <button name="onboarding_next" class="button-primary cfc-stripe-payment" disabled="disabled" type="submit" value="Next"><?= __('Next') ?></button>
-	            </div>
+                <div class="cfc-step-btn">
+                    <button name="onboarding_next" class="button-primary cfc-stripe-payment" disabled="disabled" type="submit" value="Next"><?= __('Next') ?></button>
+                </div>
 
-	        </div>
-	    </div>
-	    
-	</div>
+            </div>
+        </div>
+        
+    </div>
 </form>
 <script type="text/javascript">
-	require([
-	    'jquery',
-	    'mage/mage'
-	], function($){
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($){
 
-		// Set your publishable key: remember to change this to your live publishable key in production
-    	// See your keys here: https://dashboard.stripe.com/account/apikeys
-		var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
-		var form = document.getElementById('cfc_form');
-	    var elements = stripe.elements({
-	        fonts: [
-	          {
-	            cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
-	          }
-	        ],
-	        // Stripe's examples are localized to specific languages, but if
-	        // you wish to have Elements automatically detect your user's locale,
-	        // use `locale: 'auto'` instead.
-	        locale: 'auto'
-	      });
+        // Set your publishable key: remember to change this to your live publishable key in production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        var stripe = Stripe('<?= $carbonclickconfig['stripe']['public'] ?>');
+        var form = document.getElementById('cfc_form');
+        var elements = stripe.elements({
+            fonts: [
+              {
+                cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
+              }
+            ],
+            // Stripe's examples are localized to specific languages, but if
+            // you wish to have Elements automatically detect your user's locale,
+            // use `locale: 'auto'` instead.
+            locale: 'auto'
+          });
 
-	    // Floating labels
+        // Floating labels
         var inputs = document.querySelectorAll('.card-element .input');
         Array.prototype.forEach.call(inputs, function(input) {
             input.addEventListener('focus', function() {
@@ -120,7 +120,7 @@
             });
         });
 
-	    var elementStyles = {
+        var elementStyles = {
             base: {
                 color: '#32325D',
                 fontWeight: 500,
@@ -259,9 +259,9 @@
 
         registerElements([cardNumber, cardExpiry, cardCvc], 'card-element', stripe, form);
 
-	    // Create a token or display an error when the form is submitted.
-	    form.addEventListener('submit', function(event) {
-	      	event.preventDefault();
+        // Create a token or display an error when the form is submitted.
+        form.addEventListener('submit', function(event) {
+              event.preventDefault();
 
             var plainInputsValid = true;
             Array.prototype.forEach.call(form.querySelectorAll('input'), function(
@@ -328,9 +328,9 @@
                     });
                 }
             });
-	    });
-	 
-	});
+        });
+     
+    });
     
     
 </script>

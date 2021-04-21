@@ -16,7 +16,7 @@ class InstallButton extends Field
     {
         $element->setData('value', __("Request Installation Help"));
         $element->setData('class', "action-default");
-        $element->setData('onclick','window.open("'.$this->getActionUrl().'","_self")');
+        $element->setData('onclick', 'window.open("'.$this->getActionUrl().'","_self")');
 
         return '<div style="margin-bottom:10px">'
             . __('Wuold you like CarbonClick to take care of installing the widget to your theme? No extra charge.')

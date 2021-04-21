@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Carbonclick\CFC\Setup;
 
@@ -9,16 +9,16 @@ use Magento\Framework\Setup\UninstallInterface;
 class Uninstall implements UninstallInterface
 {
 
-	public function __construct(
+    public function __construct(
         \Carbonclick\CFC\Model\Service\Cfc\UpdateStatus $updatestatus
     ) {
         $this->updatestatus = $updatestatus;
     }
-	/**
-	 * @param  SchemaSetupInterface $setup
-	 * @param  ModuleContextInterface $context
-	 * @return null
-	 */
+    /**
+     * @param  SchemaSetupInterface $setup
+     * @param  ModuleContextInterface $context
+     * @return null
+     */
     public function uninstall(
         SchemaSetupInterface $setup,
         ModuleContextInterface $context

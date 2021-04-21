@@ -59,47 +59,48 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
                 ->getTransport();
             $transport->sendMessage();
             $this->inlineTranslation->resume();
-        } catch (\Exception $e) {
-            echo $e->getMessage(); die;
+        } catch (\Exception $e) {            
             $this->logger->debug($e->getMessage());
+            return;
         }
     }
 
     public function getConfig($config_path)
     {
         return $this->scopeConfig->getValue(
-                $config_path,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-                );
+            $config_path,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 
-    public function getModuleDisabled(){
-        if($this->request->getParam('carbonclick') == true)
-        {
+    public function getModuleDisabled()
+    {
+        if ($this->request->getParam('carbonclick') == true) {
             return false;
         }
-        if($this->getConfig('cfc/general/shop'))
-        {
-            return !$this->getConfig('cfc/general/enable');    
+        if ($this->getConfig('cfc/general/shop')) {
+            return !$this->getConfig('cfc/general/enable');
         }
 
         return true;
     }
 
-    public function getCartpageDisable(){
-        if($this->getModuleDisabled() != true){
+    public function getCartpageDisable()
+    {
+        if ($this->getModuleDisabled() != true) {
             $location = $this->getAvailableLocation();
-            if(in_array('cart', $location)){
+            if (in_array('cart', $location)) {
                 return false;
             }
         }
         return true;
     }
 
-    public function getMiniCartpageDisable(){
-        if($this->getModuleDisabled() != true){
+    public function getMiniCartpageDisable()
+    {
+        if ($this->getModuleDisabled() != true) {
             $location = $this->getAvailableLocation();
-            if(in_array('mini_cart', $location)){
+            if (in_array('mini_cart', $location)) {
                 return false;
             }
         }
@@ -107,36 +108,37 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
 
-    public function getCheckoutpageDisable(){
-        if($this->getModuleDisabled() != true){
+    public function getCheckoutpageDisable()
+    {
+        if ($this->getModuleDisabled() != true) {
             $location = $this->getAvailableLocation();
-            if(in_array('checkout', $location)){
+            if (in_array('checkout', $location)) {
                 return false;
             }
         }
         return true;
     }
 
-    public function getAvailableLocation(){
+    public function getAvailableLocation()
+    {
         $location = $this->getConfig('cfc/general/widget_location');
         return explode(",", $location);
     }
 
     public function getTemplateConfig()
     {
-        if($this->getMiniCartpageDisable()){
-            return 'Magento_Checkout/minicart/content';            
+        if ($this->getMiniCartpageDisable()) {
+            return 'Magento_Checkout/minicart/content';
         }
-        if($this->getConfig('cfc/general/enable') == 1){
-            if(version_compare($this->getMagentoVersion(), "2.3.6", "<=")){
-                return 'Carbonclick_CFC/minicart/content234';    
-            }elseif(version_compare($this->getMagentoVersion(), "2.4.1", "<=")){
+        if ($this->getConfig('cfc/general/enable') == 1) {
+            if (version_compare($this->getMagentoVersion(), "2.3.6", "<=")) {
+                return 'Carbonclick_CFC/minicart/content234';
+            } elseif (version_compare($this->getMagentoVersion(), "2.4.1", "<=")) {
                 return 'Carbonclick_CFC/minicart/content';
             }
         }
 
         return 'Magento_Checkout/minicart/content';
-        
     }
 
     public function getMagentoVersion()

@@ -1,7 +1,6 @@
 <?php
 namespace Carbonclick\CFC\Controller\Adminhtml\Onboard;
 
-
 class Index extends \Magento\Backend\App\Action
 {
     protected $imapctall;
@@ -15,8 +14,7 @@ class Index extends \Magento\Backend\App\Action
         \Carbonclick\CFC\Model\Service\Cfc\Impactall $imapctall,
         \Carbonclick\CFC\Model\Service\Cfc\CreateShop $createshop,
         \Magento\Framework\Registry $registry
-    )
-    {
+    ) {
         $this->imapctall = $imapctall;
         $this->createshop = $createshop;
         $this->registry = $registry;
@@ -25,26 +23,26 @@ class Index extends \Magento\Backend\App\Action
 
     public function execute()
     {
-        if(empty($this->createshop->getConfiguration())){
+        if (empty($this->createshop->getConfiguration())) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/dashboard/serverdown');
             return $resultRedirect;
         }
         $notice = $this->createshop->getConfig('cfc/general/payment');
-        if($notice){
+        if ($notice) {
             $this->messageManager->addNotice($notice);
         }
         $invoicenotice = $this->createshop->getConfig('cfc/general/invoice');
-        if($invoicenotice){
+        if ($invoicenotice) {
             $this->messageManager->addNotice($invoicenotice);
         }
-        if($this->createshop->getShop()){
+        if ($this->createshop->getShop()) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/dashboard/index');
             return $resultRedirect;
         }
         $impactall = $this->imapctall->getImpactAlldata();
-        if($impactall){
+        if ($impactall) {
             $this->registry->register('impactall', $impactall);
         }
         $this->_view->loadLayout();

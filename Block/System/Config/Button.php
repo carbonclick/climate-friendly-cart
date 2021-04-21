@@ -16,7 +16,7 @@ class Button extends Field
     {
         $element->setData('value', __("Open Instructions"));
         $element->setData('class', "action-default");
-        $element->setData('onclick','window.open("'.$this->getActionUrl().'", "_blank")');
+        $element->setData('onclick', 'window.open("'.$this->getActionUrl().'", "_blank")');
 
         return '<div style="margin-bottom:10px">'
             . __('Want to see the steps to add CarbonClick to your theme? (Opens in a new window).')

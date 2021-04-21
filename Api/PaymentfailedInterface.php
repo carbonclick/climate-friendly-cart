@@ -19,5 +19,5 @@ interface PaymentfailedInterface
      * @param string $message
      * @return bool
      */
-    public function update($type,$message);
+    public function update($type, $message);
 }

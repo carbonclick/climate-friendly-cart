@@ -12,18 +12,17 @@ class Option implements \Magento\Framework\Option\ArrayInterface
 
         return  [
                     [
-                        'value' => 'standard', 
+                        'value' => 'standard',
                         'label' => __('Standard')
-                    ], 
+                    ],
                     [
-                        'value' => 'black', 
+                        'value' => 'black',
                         'label' => __('Black')
                     ],
                     [
-                        'value' => 'white', 
+                        'value' => 'white',
                         'label' => __('White')
                     ]
                 ];
     }
-
 }

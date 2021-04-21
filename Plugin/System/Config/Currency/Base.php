@@ -21,7 +21,7 @@ class Base
         \Carbonclick\CFC\Model\Service\SaveDashboard $configSave
     ) {
         $this->configSave = $configSave;
-        $this->cfcproduct = $cfcproduct; 
+        $this->cfcproduct = $cfcproduct;
         $this->updateshop = $updateshop;
     }
 
@@ -29,8 +29,8 @@ class Base
         \Magento\Config\Model\Config\Backend\Currency\Base $subject,
         $result
     ) {
-        if(in_array($subject->getValue(), $this->currency)){
-            $this->configSave->saveConfig('cfc/general/enable',0);
+        if (in_array($subject->getValue(), $this->currency)) {
+            $this->configSave->saveConfig('cfc/general/enable', 0);
             $this->cfcproduct->UpdateStatus(0);
             $this->updateshop->UpdateShop(['setup'=>false]);
         }

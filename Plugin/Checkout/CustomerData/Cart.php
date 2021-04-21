@@ -20,7 +20,7 @@ class Cart
     {
         $block = $this->carbonclick->getConfig();
 
-        if(empty($block)){
+        if (empty($block)) {
             return $result;
         }
 

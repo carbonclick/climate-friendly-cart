@@ -29,15 +29,15 @@ class Enable extends \Magento\Framework\App\Config\Value
         array $data = []
     ) {
        
-       $this->cfcproduct = $cfcproduct; 
-       $this->updateshop = $updateshop; 
+        $this->cfcproduct = $cfcproduct;
+        $this->updateshop = $updateshop;
         parent::__construct(
-            $context, 
-            $registry, 
-            $config, 
-            $cacheTypeList, 
-            $resource, 
-            $resourceCollection, 
+            $context,
+            $registry,
+            $config,
+            $cacheTypeList,
+            $resource,
+            $resourceCollection,
             $data
         );
     }
@@ -46,7 +46,7 @@ class Enable extends \Magento\Framework\App\Config\Value
      * @return $this
      */
     public function afterSave()
-    { 
+    {
         if ($this->isValueChanged()) {
              $this->cfcproduct->UpdateStatus($this->getValue());
              $value = $this->getValue() == 1? true: false;
@@ -62,21 +62,21 @@ class Enable extends \Magento\Framework\App\Config\Value
      */
     public function beforeSave()
     {
-        if($this->getValue() == 1 && empty($this->updateshop->getShop())){
+        if ($this->getValue() == 1 && empty($this->updateshop->getShop())) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Please complete Onboarding Process before enable the extension.')
             );
         }
 
-        if($this->getValue() == 1 && in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)){
+        if ($this->getValue() == 1 && in_array($this->updateshop->getConfig('currency/options/base'), $this->currency)) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('We are not supported Zero-decimal currencies.')
-            );    
+            );
         }
 
-        if($this->getValue() == 1){
+        if ($this->getValue() == 1) {
             $response = $this->updateshop->UpdateShop(['setup'=>true]);
-            if($response['success'] == false && $response['error'] == "blocked"){
+            if ($response['success'] == false && $response['error'] == "blocked") {
                 throw new \Magento\Framework\Exception\LocalizedException(
                     __($response['message'])
                 );
@@ -85,5 +85,4 @@ class Enable extends \Magento\Framework\App\Config\Value
 
         return parent::beforeSave();
     }
-
 }

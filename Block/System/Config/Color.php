@@ -27,7 +27,7 @@ class Color extends \Magento\Config\Block\System\Config\Form\Field
         $output .= parent::_getElementHtml($element);
         $value = $element->getData('value');
 
-		$output .= '
+        $output .= '
         <script type="text/javascript">
             require(["jquery", "jquery/colorpicker/js/colorpicker"], function($) {
                 $(function() {
