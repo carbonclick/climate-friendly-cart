@@ -43,7 +43,7 @@ class CreateShop extends Authentication
         
         $storename = $this->getConfig("general/store_information/name");
         if (empty($storename)) {
-            $user = $this->authSession->getUser();
+            $user = $this->authSession->create()->getUser();
             if ($user) {
                 $storename = $user->getFirstname().' '.$user->getLastname() ;
             } else {

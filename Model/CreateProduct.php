@@ -2,7 +2,7 @@
 
 namespace Carbonclick\CFC\Model;
 
-use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\ProductFactory;
 use Carbonclick\CFC\Service\ImportImageService;
 use Carbonclick\CFC\Model\Service\SaveDashboard;
 use Carbonclick\CFC\Model\Service\Cfc\Countries;
@@ -32,7 +32,7 @@ class CreateProduct
     protected $logger;
 
     public function __construct(
-        Product $product,
+        ProductFactory $product,
         SaveDashboard $saveconfig,
         ImportImageService $image,
         Countries $countries,
@@ -110,7 +110,7 @@ class CreateProduct
         $params = ['_secure' => $this->request->isSecure()];
         $imageUrl = $this->assetRepo->getUrlWithParams('Carbonclick_CFC::images/'.$filename, $params);
         try {
-            $product = $this->product;
+            $product = $this->product->create();
             if ($productId) {
                 $product->load($productId);
                 $this->image->execute($product, $imageUrl, false, ['image', 'small_image', 'thumbnail']);
@@ -128,7 +128,7 @@ class CreateProduct
         $productId = $this->saveconfig->getConfig("cfc/general/product");
         $taxId = $this->countries->getStoretaxable() == 1 ? 2 : 0;
         try {
-            $product = $this->product;
+            $product = $this->product->create();
             if ($productId) {
                 $product->load($productId);
                 $product->setPrice($price);
@@ -153,7 +153,7 @@ class CreateProduct
     {
         $productId = $this->saveconfig->getConfig("cfc/general/product");
         try {
-            $product = $this->product;
+            $product = $this->product->create();
             if ($productId) {
                 $product->load($productId);
                 $product->setStatus($status == 0 ? 2 : $status);
@@ -167,7 +167,7 @@ class CreateProduct
 
     public function getProduct()
     {
-        $model = $this->product;
+        $model = $this->product->create();
         $product = $model->loadByAttribute('sku', 'carbon-offset');
         if ($product && $product->getId()) {
             return $product;

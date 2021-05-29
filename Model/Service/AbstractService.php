@@ -35,7 +35,7 @@ abstract class AbstractService
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Backend\Model\Auth\Session $authSession,
+        \Magento\Backend\Model\Auth\SessionFactory $authSession,
         Curl $curl,
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory,

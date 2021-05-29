@@ -2,14 +2,14 @@
   "name": "carbonclick/climate-friendly-cart",
   "description": "Climate Friendly Cart extension for Magento 2",
   "type": "magento2-module",
-  "version": "1.0.67",
+  "version": "1.0.69",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
   ],
   "require": {
     "php": ">=7.3 <8.0.0",
-    "magento/framework": "100.0.*|100.1.*|101.0.*|102.0.*|103.0.*"
+    "magento/framework": "100.*|100.*|101.*|102.*|103.*"
   },
   "autoload": {
     "files": [ "registration.php" ],
