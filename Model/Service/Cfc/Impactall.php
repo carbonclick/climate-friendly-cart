@@ -23,7 +23,7 @@ class Impactall extends Authentication
             $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->get(self::CARBONCLICK_CONFIG_URL.'api/carbonclick/impacts/all/magento');
+            $this->curl->get($this->getCarbonConfigUrl().'api/carbonclick/impacts/all/magento');
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

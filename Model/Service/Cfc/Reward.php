@@ -23,7 +23,7 @@ class Reward extends CreateShop
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
             $this->curl->addHeader("Authorization", "Bearer ".$shop['access_token']);
-            $this->curl->put(self::CARBONCLICK_CONFIG_URL.'api/rewards/redeem', $this->jsonHelper->jsonEncode($params));
+            $this->curl->put($this->getCarbonConfigUrl().'api/rewards/redeem', $this->jsonHelper->jsonEncode($params));
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

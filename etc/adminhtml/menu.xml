@@ -3,7 +3,6 @@
    <menu>
        <add id="Carbonclick_CFC::menu" title="Climate Friendly Cart" module="Carbonclick_CFC" sortOrder="10" resource="Carbonclick_CFC::menu" />
        <add id="Carbonclick_CFC::cfc_dashboard" title="Dashboard" module="Carbonclick_CFC" translate="title" sortOrder="2" action="cfc/dashboard" parent="Carbonclick_CFC::menu" resource="Carbonclick_CFC::cfc_dashboard"/>
-       <add id="Carbonclick_CFC::cfc_reward" title="Climate Friendly Rewards" module="Carbonclick_CFC" translate="title" sortOrder="5" action="cfc/reward" parent="Carbonclick_CFC::menu" resource="Carbonclick_CFC::cfc_reward"/>
        <add id="Carbonclick_CFC::cfc_card" title="Account" module="Carbonclick_CFC" translate="title" sortOrder="10" action="cfc/card" parent="Carbonclick_CFC::menu" resource="Carbonclick_CFC::cfc_card" dependsOnConfig="cfc/general/prepaid" />
        <add id="MGS_Mpanel::general_setting" title="Configuration" module="Carbonclick_CFC" sortOrder="15" parent="Carbonclick_CFC::menu" action="adminhtml/system_config/edit/section/cfc" resource="Carbonclick_CFC::general_setting"/>
    </menu>

@@ -78,7 +78,7 @@ class CreateShop extends Authentication
             $this->curl->setOption(CURLOPT_TIMEOUT, 60);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->post(self::CARBONCLICK_CONFIG_URL.'api/shops', $this->jsonHelper->jsonEncode($params));
+            $this->curl->post($this->getCarbonConfigUrl().'api/shops', $this->jsonHelper->jsonEncode($params));
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

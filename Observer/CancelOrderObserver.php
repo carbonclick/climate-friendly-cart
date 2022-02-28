@@ -38,7 +38,7 @@ class CancelOrderObserver implements ObserverInterface
                     "number"=> $order->getEntityId(),
                     "cancel_reason"=> "Order Cancelled",
                 ];
-                $this->_logger->log(100, print_r($params, true));
+                //$this->_logger->log(100, print_r($params, true));
                 $this->refund->sendRefundRequest($params);
                 break;
             }

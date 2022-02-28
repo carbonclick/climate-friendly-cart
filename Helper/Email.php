@@ -133,7 +133,7 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         if ($this->getConfig('cfc/general/enable') == 1) {
             if (version_compare($this->getMagentoVersion(), "2.3.6", "<=")) {
                 return 'Carbonclick_CFC/minicart/content234';
-            } elseif (version_compare($this->getMagentoVersion(), "2.4.1", "<=")) {
+            } elseif (version_compare($this->getMagentoVersion(), "2.4.3-p1", "<=")) {
                 return 'Carbonclick_CFC/minicart/content';
             }
         }

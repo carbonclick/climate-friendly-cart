@@ -25,7 +25,7 @@ class FetchCustomer extends CreateShop
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
             $this->curl->addHeader("Authorization", "Bearer ".$shop['access_token']);
-            $this->curl->get(self::CARBONCLICK_CONFIG_URL.'api/shops/details');
+            $this->curl->get($this->getCarbonConfigUrl().'api/shops/details');
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

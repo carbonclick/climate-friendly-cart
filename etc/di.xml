@@ -23,6 +23,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="carbonclick_postpaid" xsi:type="object">Carbonclick\CFC\Console\Command\Postpaid</item>
+                <item name="carbonclick_mode" xsi:type="object">Carbonclick\CFC\Console\Command\Mode</item>
             </argument>
         </arguments>
     </type>

@@ -25,7 +25,7 @@ class MerchantImpact extends CreateShop
             $this->curl->addHeader("Authorization", "Bearer ".$shop['access_token']);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->get(self::CARBONCLICK_CONFIG_URL.'api/carbonclick/impacts/merchant');
+            $this->curl->get($this->getCarbonConfigUrl().'api/carbonclick/impacts/merchant');
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

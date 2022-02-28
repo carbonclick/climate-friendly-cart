@@ -28,7 +28,7 @@
                             <?php
                         } else {
                             ?>
-                               <p><?= __('After the 14 day free trial you will be charged the monthly subscription price for the app') ?></p>
+                               <p><?= __('After a 14 day free trial you will be charged <strong>US$%1 monthly</strong> for use of the app', $carbonclickconfig['plugin']['sub_price']) ?></p>
                                <p><?= __('You will also be charged 5 %1 now to topup your offset prepay balance. This balance will be automatically topped up when your balance is low.', $block->getBaseCurrencyCode()) ?></p>
                             <?php
                         }

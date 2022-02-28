@@ -4,9 +4,12 @@
         <cfc>
             <general>
                 <enable>0</enable>
+                <mode>1</mode>
                 <offset>2</offset>
                 <topup>100</topup>
                 <widget_location>cart,checkout</widget_location>
+                <sku_enable>0</sku_enable>
+                <sku_value>carbon-offset</sku_value>
             </general>
             <lookandfeel>
             	<plugincolors>

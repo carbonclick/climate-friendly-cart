@@ -30,7 +30,7 @@ class Countries extends Authentication
             $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->get(self::CARBONCLICK_CONFIG_URL.'api/countries');
+            $this->curl->get($this->getCarbonConfigUrl().'api/countries');
             $response = $this->curl->getBody();
             if ($this->curl->getStatus() == 200) {
                 return $response;

@@ -4,8 +4,9 @@ namespace Carbonclick\CFC\Model\Service;
 
 abstract class AbstractService
 {
-    // DO NOT CHANGE THE THE VALUE OF THIS VARIABLE . Our make script performs a search/replace on this to insert the correct url for each environment.
-    const CARBONCLICK_CONFIG_URL = 'https://extmagewoo.carbon.click/';
+    const CARBONCLICK_CONFIG_URL = 'https://extmagewoo.qual.carbon.click/';
+
+    const CARBONCLICK_CONFIG_URL_LIVE = 'https://extmagewoo.carbon.click/';    
 
     protected $scopeConfig;
 
@@ -61,6 +62,15 @@ abstract class AbstractService
         return $this->scopeConfig->getValue($path);
     }
 
+    public function getCarbonConfigUrl(){
+       $mode = $this->getConfig('cfc/general/mode');
+       if($mode == 1){            
+            return self::CARBONCLICK_CONFIG_URL_LIVE;
+       }else{
+            return self::CARBONCLICK_CONFIG_URL;
+       }
+    }
+
     protected function refreshCache()
     {
         
@@ -77,7 +87,7 @@ abstract class AbstractService
             $this->curl->setOption(CURLOPT_TIMEOUT, 60);
             $this->curl->addHeader("Content-Type", "application/json");
             $this->curl->addHeader("Accept", "application/json");
-            $this->curl->post(self::CARBONCLICK_CONFIG_URL.'api/carbonclick/config', $this->jsonHelper->jsonEncode($params));
+            $this->curl->post($this->getCarbonConfigUrl().'api/carbonclick/config', $this->jsonHelper->jsonEncode($params));
             $response = $this->curl->getBody();
 
             if ($this->curl->getStatus() == 200) {

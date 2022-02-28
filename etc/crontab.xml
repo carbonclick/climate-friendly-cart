@@ -5,5 +5,8 @@
         <job name="carbonclick_sync_order" instance="Carbonclick\CFC\Cron\SyncOrder" method="execute">
             <schedule>0 */1 * * *</schedule>
         </job>
+        <job name="carbonclick_customer_impact_data" instance="Carbonclick\CFC\Cron\CustomerData" method="execute">
+            <schedule>*/10 * * * *</schedule>
+        </job>
     </group>
 </config>

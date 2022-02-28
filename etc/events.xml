@@ -6,4 +6,10 @@
 	<event name="order_cancel_after">
 		<observer name="carbonclick_order_cancel_after" instance="Carbonclick\CFC\Observer\CancelOrderObserver" />
 	</event>
+	<event name="admin_system_config_save">
+        <observer name="cfc_changed_sku_info" instance="Carbonclick\CFC\Observer\ConfigObserver"/>
+    </event>
+    <event name="sales_order_creditmemo_save_after">
+		<observer name="carbonclick_order_creditmemo_after" instance="Carbonclick\CFC\Observer\CreditmemoOrderObserver" />
+	</event>
 </config>

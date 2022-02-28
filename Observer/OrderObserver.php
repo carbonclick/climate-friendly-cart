@@ -47,6 +47,7 @@ class OrderObserver implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        $params = [];
         $order = $observer->getEvent()->getOrder();
         if (!$order->getId()) {
             //order not saved in the database
@@ -74,33 +75,14 @@ class OrderObserver implements ObserverInterface
                 $params = [
                     "email" => $order->getCustomerEmail(),
                     "name"=> "#".$order->getIncrementId(),
-                    "number"=> $order->getEntityId(),
-                    "phone"=>  $shippingaddress->getTelephone(),
+                    "number"=> $order->getEntityId(),                    
                     "price"=> $item->getBasePrice(),
                     "currency"=> $order->getBaseCurrencyCode(),
                     "quantity"=> (int)$item->getQtyOrdered(),
                     "tax"=> $item->getBaseTaxAmount(),
                     "total_price"=> $item->getBaseRowTotal(),
-                    "order_status_url"=> $this->urlinterface->getUrl('sales/order/view', ["order_id"=>$order->getEntityId()]),
                     "gateway"=> $order->getPayment()->getMethodInstance()->getTitle(),
-                    "city"=> $shippingaddress->getCity(),
-                    "country"=> $this->getCountryname($shippingaddress->getCountryId()),
-                    "preferred_topup"=> $preferred_topup,
-                    "billing_address"=> [
-                        "zip"=> $billingaddress->getPostcode(),
-                        "city"=> $billingaddress->getCity(),
-                        "name"=> $billingaddress->getName(),
-                        "phone"=> $billingaddress->getTelephone(),
-                        "company"=> $billingaddress->getCompany(),
-                        "country"=> $this->getCountryname($billingaddress->getCountryId()),
-                        "address1"=> count($street) > 0 ? $street[0] : "",
-                        "address2"=> count($street) > 1 ? $street[1] : "",
-                        "province"=> $billingaddress->getRegion(),
-                        "last_name"=> $billingaddress->getLastname(),
-                        "first_name"=> $billingaddress->getFirstname(),
-                        "country_code"=> $billingaddress->getCountryId(),
-                        "province_code"=> $billingaddress->getRegionCode()
-                    ]
+                    "preferred_topup"=> $preferred_topup
                 ];
                 //$this->_logger->log(100,print_r($params,true));
                    $purchase = $this->purchases->sendPurchaseRequest($params);
@@ -115,7 +97,7 @@ class OrderObserver implements ObserverInterface
             }
         }
         $this->updateshop->UpdateShop($showcart);
-        $this->_logger->log(100, print_r($params, true));
+        //$this->_logger->log(100, print_r($params, true));
         return $this;
     }
 

@@ -10,6 +10,7 @@ use Carbonclick\CFC\Model\Service\Cfc\UpdateShop;
 use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\App\RequestInterface;
 use Magento\Store\Model\StoreRepository;
+use Magento\Catalog\Model\ProductRepository;
 
 class CreateProduct
 {
@@ -40,7 +41,8 @@ class CreateProduct
         RequestInterface $request,
         StoreRepository $StoreRepository,
         UpdateShop $updateshop,
-        \Psr\Log\LoggerInterface $logger
+        \Psr\Log\LoggerInterface $logger,
+        ProductRepository $productRepository
     ) {
         $this->product = $product;
         $this->storeRepository = $StoreRepository;
@@ -51,6 +53,7 @@ class CreateProduct
         $this->request = $request;
         $this->updateshop = $updateshop;
         $this->logger = $logger;
+        $this->productRepository = $productRepository;
     }
 
     public function CreateProduct()
@@ -164,7 +167,29 @@ class CreateProduct
         }
         return $product;
     }
-
+    public function UpdateSku($sku)
+    {
+        $productId = $this->saveconfig->getConfig("cfc/general/product");
+        try {
+            $skuExist = $this->productRepository->get($sku);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e){
+            $skuExist = false;
+        }
+        try {
+            $product = $this->product->create();
+            if ($productId) {
+                if($skuExist) {
+                    return false;
+                }
+                $product->load($productId);
+                $product->setSku($sku);
+                $product->save();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+        return $product;
+    }
     public function getProduct()
     {
         $model = $this->product->create();
