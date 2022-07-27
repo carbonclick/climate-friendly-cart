@@ -125,15 +125,20 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         return explode(",", $location);
     }
 
+    /**
+     * Added line 141 to 142 for minicart load in magento version 2.3.7-p2
+     *
+     * @return void
+     */
     public function getTemplateConfig()
     {
         if ($this->getMiniCartpageDisable()) {
             return 'Magento_Checkout/minicart/content';
         }
         if ($this->getConfig('cfc/general/enable') == 1) {
-            if (version_compare($this->getMagentoVersion(), "2.3.6", "<=")) {
-                return 'Carbonclick_CFC/minicart/content234';
-            } elseif (version_compare($this->getMagentoVersion(), "2.4.3-p1", "<=")) {
+            if (version_compare($this->getMagentoVersion(), "2.3.7-p3", "<=")) {
+                return 'Carbonclick_CFC/minicart/content234'; 
+            } elseif (version_compare($this->getMagentoVersion(), "2.4.4", "<=")) {
                 return 'Carbonclick_CFC/minicart/content';
             }
         }
