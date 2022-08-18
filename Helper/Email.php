@@ -126,8 +126,8 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Added line 141 to 142 for minicart load in magento version 2.3.7-p2
-     *
+     * Added line 141 to 142 for minicart load in magento version 2.3.7-p3 & 2.4.5    
+     * 
      * @return void
      */
     public function getTemplateConfig()
@@ -138,7 +138,7 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         if ($this->getConfig('cfc/general/enable') == 1) {
             if (version_compare($this->getMagentoVersion(), "2.3.7-p3", "<=")) {
                 return 'Carbonclick_CFC/minicart/content234'; 
-            } elseif (version_compare($this->getMagentoVersion(), "2.4.4", "<=")) {
+            } elseif (version_compare($this->getMagentoVersion(), "2.4.5", "<=")) {
                 return 'Carbonclick_CFC/minicart/content';
             }
         }
