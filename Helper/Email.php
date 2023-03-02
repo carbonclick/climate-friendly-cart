@@ -141,6 +141,9 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
             } elseif (version_compare($this->getMagentoVersion(), "2.4.5", "<=")) {
                 return 'Carbonclick_CFC/minicart/content';
             }
+            else {
+                return 'Carbonclick_CFC/minicart/content';
+            }
         }
 
         return 'Magento_Checkout/minicart/content';
