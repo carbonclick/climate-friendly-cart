@@ -122,6 +122,6 @@ abstract class AbstractService
     public function getOrderCount()
     {
         $ordercollection = $this->orderCollectionFactory->create();
-        return $ordercollection->count();
+        return $ordercollection->getSize();
     }
 }

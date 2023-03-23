@@ -48,7 +48,7 @@ class Dashboard extends \Magento\Backend\Block\Template
     public function getTotalOrder()
     {
         $ordercollection = $this->orderCollectionFactory->create();
-        return $ordercollection->count();
+        return $ordercollection->getSize();
     }
 
     public function getOrderwithOffset($offsetOrders)
