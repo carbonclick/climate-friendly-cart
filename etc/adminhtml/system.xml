@@ -42,13 +42,19 @@
                     <backend_model>Carbonclick\CFC\Model\Config\Backend\Enable</backend_model>
                     <tooltip>Use this setting for custom CRM if it's really necessary to change SKU.</tooltip>
                 </field>
-                <field id="sku_value" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="sku_value" type="text" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Custom SKU Value</label>
                      <validate>required-entry</validate>
                      <depends>
                         <field id="sku_enable">1</field>
                     </depends>
                 </field>
+                <field id="mode" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Environment</label>
+                    <source_model>Carbonclick\CFC\Model\Config\EnvironmentOption</source_model>
+                    <backend_model>Carbonclick\CFC\Model\Config\Backend\Environment</backend_model>
+                </field>
+
                 <!-- <field id="theme_instruction" translate="label" type="button" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Theme Install Instructions</label>
                     <frontend_model>Carbonclick\CFC\Block\System\Config\Button</frontend_model>
