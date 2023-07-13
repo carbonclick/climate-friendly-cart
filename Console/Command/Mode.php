@@ -78,6 +78,8 @@ class Mode extends Command
             }
         }else{
             throw new LogicException('Please select mode.');
+            return Command::INVALID;
         }
+        return Command::SUCCESS;
     }
 }

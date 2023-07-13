@@ -62,5 +62,6 @@ class Postpaid extends Command
             }
             $output->writeln("Shop is created successfully.");
         }
+        return Command::SUCCESS;
     }
 }
