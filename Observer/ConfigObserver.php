@@ -12,6 +12,9 @@ class ConfigObserver implements ObserverInterface
 {
     private $request;
     private $configWriter;
+    protected $createProduct;
+    protected $messageManager;
+
     public function __construct(RequestInterface $request, WriterInterface $configWriter, CreateProduct $createProduct, ManagerInterface $messageManager)
     {
         $this->request = $request;
@@ -32,7 +35,7 @@ class ConfigObserver implements ObserverInterface
         if(isset($params['general']['fields']['enable']['value']) || isset($params['general']['fields']['sku_enable']['value'])) {
             $enable_ext = $params['general']['fields']['enable']['value'];
             $sku_enable = $params['general']['fields']['sku_enable']['value'];
-            
+
             if($enable_ext) {
                 if($sku_enable){
                     $sku_value = $params['general']['fields']['sku_value']['value'];

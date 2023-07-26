@@ -9,6 +9,8 @@ use Magento\Framework\Setup\UninstallInterface;
 class Uninstall implements UninstallInterface
 {
 
+    protected $updatestatus;
+
     public function __construct(
         \Carbonclick\CFC\Model\Service\Cfc\UpdateStatus $updatestatus
     ) {

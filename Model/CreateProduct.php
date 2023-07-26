@@ -25,12 +25,14 @@ class CreateProduct
     protected $request;
 
     protected $countries;
-    
+
     protected $updateshop;
 
     protected $storeRepository;
 
     protected $logger;
+
+    protected $productRepository;
 
     public function __construct(
         ProductFactory $product,
