@@ -6,9 +6,6 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <type name="Magento\SalesRule\Model\RulesApplier">
-        <plugin name="remove_discount_on_order" type="Carbonclick\CFC\Plugin\SalesRule\Model\RulesApplier" sortOrder="1" disabled="false"/>
-    </type>
     <type name="Magento\Rule\Model\Condition\AbstractCondition">
         <plugin name="remove_product_data_from_quote" type="Carbonclick\CFC\Plugin\Rule\Model\AbstractCondition" sortOrder="1" disabled="false"/>
     </type>
@@ -24,6 +21,15 @@
             <argument name="commands" xsi:type="array">
                 <item name="carbonclick_postpaid" xsi:type="object">Carbonclick\CFC\Console\Command\Postpaid</item>
                 <item name="carbonclick_mode" xsi:type="object">Carbonclick\CFC\Console\Command\Mode</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\SalesRule\Model\Validator\Pool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="discount" xsi:type="array">
+                    <item name="carbonclick_offest_validator" xsi:type="object">Carbonclick\CFC\Model\Quote\Item\SalesRule\Validator</item>
+                </item>
             </argument>
         </arguments>
     </type>
